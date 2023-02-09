@@ -12,7 +12,7 @@ from cinder_meals.utils.constants import *
 
 from api.serializers import UserSerializer, RegisterSerializer, LoginSerializer, RestaurantSerializer, BannerSerializer, MealSerializer, OrderSerializer
 
-class UsersAPI(generics.ListAPIView):
+class GetUserByIDAPI(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [
@@ -82,4 +82,24 @@ class LogoutAPI(generics.GenericAPIView):
     def post(self, request):
         logout(request)
         return Response(status=status.HTTP_200_OK)
+
+class MealListAPI(generics.GenericAPIView):
+    permission_classes = [permissions.AllowAny]
     
+    def get(self,request):
+        meals = Meal.objects.filter(published=True).order_by('-created_at')
+        try:
+            meals = MealSerializer(meals, many=True).data
+        except Exception as e:
+            for field in list(e.detail):
+                error_message = e.detail[field][0]
+                response_data = {
+                    "error_message" : error_message,
+                    "meals" : None,
+                }
+                return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
+        response_data = {
+            "error_message" : None,
+            "meals" : meals,
+        }
+        return Response(response_data, status=status.HTTP_200_OK)

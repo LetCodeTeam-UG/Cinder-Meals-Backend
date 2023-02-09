@@ -45,7 +45,9 @@ class Meal(models.Model):
     description = models.CharField(max_length=200)
     price = models.DecimalField(max_digits=5, decimal_places=2)
     image = models.ImageField(upload_to='meals/images/')
-
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
+    published = models.BooleanField(default=False)
     def __str__(self):
         return self.title
 

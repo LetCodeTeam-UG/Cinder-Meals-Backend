@@ -42,7 +42,7 @@ class BannerSerializer(serializers.ModelSerializer):
 class MealSerializer(serializers.ModelSerializer):
     class Meta:
         model = Meal
-        fields = ('id', 'title', 'type', 'description', 'price', 'image')
+        fields = ('id', 'title', 'type', 'description', 'price', 'image','created_at','updated_at')
 
 class OrderSerializer(serializers.ModelSerializer):
     payment_status = serializers.SerializerMethodField("get_payment_status")
