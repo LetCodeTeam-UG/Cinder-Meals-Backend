@@ -1,4 +1,5 @@
 from django.db import models
+# trunk-ignore(flake8/F401)
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from .managers import AccountManager
 

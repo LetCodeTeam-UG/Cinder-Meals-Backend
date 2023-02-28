@@ -4,15 +4,12 @@ from rest_framework import generics,permissions, status
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
 from knox.models import AuthToken
-from knox.views import LoginView as KnoxLoginView
-
 from accounts.models import User
 from dashboard.models import Order, Delivery, Payment,Meal, OrderItem, Banner, Restaurant
 from cinder_meals.utils.constants import *
-
 from api.serializers import UserSerializer, RegisterSerializer, LoginSerializer, RestaurantSerializer, BannerSerializer, MealSerializer, OrderSerializer
 
-class GetUserByIDAPI(generics.ListAPIView):
+class GetUserByIdAPI(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [
@@ -105,3 +102,27 @@ class MealListAPI(generics.GenericAPIView):
             "meals" : meals,
         }
         return Response(response_data, status=status.HTTP_200_OK)
+
+
+class GetMealByIdAPI(generics.GenericAPIView):
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request, id):
+        meal = Meal.objects.filter(published = True, pk = id).first()
+        try:
+            meal = MealSerializer(meal).data
+        except Exception as e:
+            for field in list(e.detatil):
+                error_message = e.detail[field][0]
+                response_data = {
+                    "error_message" : error_message,
+                    "meal" : None,
+                }
+                return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
+        response_data = {
+            "error_message" : None,
+            "meal" : meal,
+        }
+        return Response(response_data, status=status.HTTP_200_OK)
+
+# class AddToCartAPI()
