@@ -26,7 +26,7 @@ class RegisterAPI(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         error_message = ""
         request_data = request.data.copy()
-        serializer = self.get_serializer(data=request.data)
+        serializer = self.get_serializer(data=request_data)
         try:
             serializer.is_valid(raise_exception=True)
         except ValidationError as e:
@@ -38,7 +38,9 @@ class RegisterAPI(generics.GenericAPIView):
                     "token" : None,
                 }
                 return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
-        user = serializer.save()
+        user = serializer.save(is_customer = True)
+        # user.is_customer = True
+        # user.save()
         
         response_data = {
             "error_message" : None,

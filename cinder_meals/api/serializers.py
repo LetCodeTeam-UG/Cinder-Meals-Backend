@@ -32,7 +32,7 @@ class LoginSerializer(serializers.Serializer):
 class RestaurantSerializer(serializers.ModelSerializer):
     class Meta:
         model = Restaurant
-        fields = ('id', 'name', 'address', 'phone')
+        fields = ('id', 'name', 'gender', 'phone')
 
 class BannerSerializer(serializers.ModelSerializer):
     class Meta:
