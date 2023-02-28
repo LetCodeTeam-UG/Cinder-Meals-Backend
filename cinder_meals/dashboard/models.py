@@ -134,6 +134,7 @@ class Delivery(models.Model):
         return self.name
 
 class Payment(models.Model):
+    user = models.ForeignKey('accounts.User', on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     phone = models.CharField(max_length=20)
     address = models.CharField(max_length=200)
@@ -145,4 +146,8 @@ class Payment(models.Model):
     def __str__(self):
         return self.name
 
+class Address(models.Model):
+    user = models.ForeignKey('accounts.User', on_delete=models.CASCADE)
+    name = models.CharField(max_length=200)
+    note = models.CharField(max_length=200)
 

@@ -3,12 +3,11 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 from .managers import AccountManager
 
 class User(AbstractUser):
-    username = models.CharField(max_length=100, unique=True)
-    email = models.EmailField(unique=True)
+    username = None
+    email = models.EmailField(('Email address'), unique=True)
     fullname = models.CharField(max_length=50)
     gender = models.CharField(max_length=10)
     phone = models.CharField(max_length=20)
-    address = models.CharField(max_length=200)
     date_joined = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(auto_now=True)
     is_admin = models.BooleanField(default=False)
@@ -17,14 +16,15 @@ class User(AbstractUser):
     is_superuser = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
 
-    USERNAME_FIELD = 'username'
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
     objects = AccountManager()
     
     class Meta:
         db_table = 'users'
 
     def get_name(self):
-        return self.fullname or self.username
+        return self.fullname or self.email
 
     def __str__(self):
         return self.email
