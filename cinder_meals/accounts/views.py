@@ -28,3 +28,21 @@ class LoginView(View):
             print(context)
             messages.error(request, "Invalid credentials")
             return render(request, self.template_name, context)
+
+class ForgotPasswordView(View):
+    def get(self, request):
+        return render(request, 'forgot-password.html')
+    def post(self, request):
+        email = request.POST.get('email')
+        user = User.objects.filter(email=email).first()
+        if user:
+            user.send_password_reset_email()
+            messages.success(request, "Password reset link sent to your email")
+        else:
+            messages.error(request, "User with this email does not exist")
+        return redirect('accounts:login')
+    
+class LogoutView(View):
+    def get(self, request):
+        logout(request)
+        return redirect('accounts:login')
