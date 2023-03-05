@@ -240,7 +240,7 @@ if(jQuery('#chart_widget_2').length > 0 ){
     const chart_widget_2 = document.getElementById("chart_widget_2").getContext('2d');
     //generate gradient
     const chart_widget_2gradientStroke = chart_widget_2.createLinearGradient(0, 0, 0, 250);
-    chart_widget_2gradientStroke.addColorStop(0, "#2f4cdd");
+    chart_widget_2gradientStroke.addColorStop(0, "#ed7014");
     chart_widget_2gradientStroke.addColorStop(1, "#7c8fee");
 
     // chart_widget_2.attr('height', '100');
@@ -407,7 +407,7 @@ if(jQuery('#chart_widget_2').length > 0 ){
         labels: ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'forteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty'],
         datasets: [{
             label: 'Expense',
-            backgroundColor: '#2f4cdd',
+            backgroundColor: '#ed7014',
             hoverBackgroundColor: '#6c2586', 
             data: [
                 '20',
@@ -1178,7 +1178,7 @@ if(jQuery('#chart_widget_17').length > 0 ){
 		if(jQuery('#chart_widget_17').length > 0 ){
 	
 	const chart = $.plot('#chart_widget_17', [getRandomData()], {
-		colors: ['#2f4cdd'],
+		colors: ['#ed7014'],
 		series: {
 			lines: {
 				show: true,

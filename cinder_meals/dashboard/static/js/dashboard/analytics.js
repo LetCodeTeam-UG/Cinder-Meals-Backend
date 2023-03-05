@@ -31,7 +31,7 @@
 				endingShape: 'rounded'
 			  },
 			},
-			colors:['#2f4cdd'],
+			colors:['#ed7014'],
 			dataLabels: {
 			  enabled: false,
 			},
@@ -46,7 +46,7 @@
 			stroke: {
 			  show: true,
 			  width: 4,
-			  colors:['#2f4cdd'],
+			  colors:['#ed7014'],
 			},
 			
 			grid: {
