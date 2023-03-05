@@ -5,10 +5,6 @@ from django.views import View
 class DashboardView(View):
     def get(self, request):
         return render(request, 'pages/dashboard.html')
-
-class LoginView(View):
-    def get(self, request):
-        return render(request, 'pages/login.html')
     
 class CreateUpdateUserView(View):
     def get(self, request):

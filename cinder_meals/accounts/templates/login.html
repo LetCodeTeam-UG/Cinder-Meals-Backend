@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Eatio - Restaurant Food Order Bootstrap Admin Dashboard</title>
+    <title>Cinder Meals Dashboard Login</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="/static/images/favicon.png">
     <link href="/static/css/style.css" rel="stylesheet">
@@ -22,20 +22,33 @@
                             <div class="col-xl-12">
                                 <div class="auth-form">
                                     <h4 class="text-center mb-4">Sign in your account</h4>
-                                    <form action="index.html">
+                                    <form action="{% url 'accounts:login' %}" method="POST" >
+                                        {% csrf_token %}
+                                        <div class="">
+                                            {% if messages %}
+                                                {% for message in messages %}
+                                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                        <strong>{{ message }}</strong>
+                                                    </div>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </div>
                                         <div class="form-group">
                                             <label class="mb-1"><strong>Email</strong></label>
-                                            <input type="email" class="form-control" value="hello@example.com">
+                                            <input type="email" class="form-control" name="email" value="{{email}}" required autofocus>
                                         </div>
                                         <div class="form-group">
                                             <label class="mb-1"><strong>Password</strong></label>
-                                            <input type="password" class="form-control" value="Password">
+                                            <input type="password" class="form-control" name="password" value="{{password}}" required>
                                         </div>
                                         <div class="form-row d-flex justify-content-between mt-4 mb-2">
                                             <div class="form-group">
                                                <div class="custom-control custom-checkbox ml-1">
 													<input type="checkbox" class="custom-control-input" id="basic_checkbox_1">
-													<label class="custom-control-label" for="basic_checkbox_1">Remember my preference</label>
+													<label class="custom-control-label" for="basic_checkbox_1" name="remember_me">Remember Me</label>
 												</div>
                                             </div>
                                             <div class="form-group">
@@ -43,11 +56,11 @@
                                             </div>
                                         </div>
                                         <div class="text-center">
-                                            <button type="submit" class="btn btn-primary btn-block">Sign Me In</button>
+                                            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
                                         </div>
                                     </form>
                                     <div class="new-account mt-3">
-                                        <p>Don't have an account? <a class="text-primary" href="/static/page-register.html">Sign up</a></p>
+                                        <p>Visit Our Website <a class="text-primary" href="">Cinder Meals</a></p>
                                     </div>
                                 </div>
                             </div>
