@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+
+
+<html lang="en" class="h-100">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="" />
+    <meta name="author" content="" />
+    <meta name="robots" content="" />
+    <meta name="description" content="Davur - Restaurant Django Admin Dashboard + FrontEnd" />
+    <meta property="og:title" content="Davur - Restaurant Django Admin Dashboard + FrontEnd" />
+    <meta property="og:description" content="Davur - Restaurant Django Admin Dashboard + FrontEnd" />
+    <meta property="og:image" content="https://davur.dexignzone.com/django/social-image.png" />
+    <meta name="format-detection" content="telephone=no">
+    <title>Davur - Restaurant Django Admin Dashboard + FrontEnd</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/frontend/images/favicon.png">
+
+
+
+
+
+    <link rel="stylesheet" href="/static/davur/vendor/bootstrap-select/dist/css/bootstrap-select.min.css">
+
+    <link rel="stylesheet" href="/static/davur/css/style.css">
+
+
+
+
+
+</head>
+
+<body class="h-100">
+    <div class="authincation h-100">
+        <div class="container h-100">
+            <div class="row justify-content-center h-100 align-items-center">
+                <div class="col-md-6">
+                    <div class="authincation-content">
+                        <div class="row no-gutters">
+                            <div class="col-xl-12">
+                                <div class="auth-form">
+                                    <div class="text-center mb-3">
+                                        <a href="/index/"><img src="/static/davur/images/logo-full.png" alt=""></a>
+                                    </div>
+                                    <h4 class="text-center mb-4">Sign in your account</h4>
+
+
+                                    <ul class="messages">
+
+                                        <li class="success">
+
+                                            <div class="alert alert-success alert  alert-dismissible alert-alt solid fade show">
+
+
+                                                <div class="media">
+                                                    <div class="media-body">
+                                                        <p class="mb-0"> Logout Successfully</p>
+                                                    </div>
+                                                </div>
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close">
+        </button>
+                                            </div>
+
+                                        </li>
+
+                                    </ul>
+
+
+
+
+
+
+                                    <form method="post"><input type="hidden" name="csrfmiddlewaretoken" value="MmTWgO3U0npAMwQoHlEDJOPbO7fUcphkOaALKPf35W3P1haf0Cb78nAtSPBmF2rW">
+                                        <div class="form-group">
+                                            <label class="mb-1"><strong>Email</strong></label>
+                                            <input type="email" name="email" placeholder="Email" class="form-control" required id="id_email">
+                                            <div class="text-danger w-100 d-block mt-1">
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="mb-1"><strong>Password</strong></label>
+                                            <input type="password" name="password" id="dz-password" placeholder="Password" class="form-control" required>
+                                            <div class="text-danger w-100 d-block mt-1">
+
+                                            </div>
+                                        </div>
+                                        <div class="form-row d-flex justify-content-between mt-4 mb-2 flex-wrap">
+                                            <div class="form-group">
+                                                <div class="custom-control custom-checkbox me-2 ">
+                                                    <input type="checkbox" class="form-check-input mt-0" id="basic_checkbox_1">
+                                                    <label class="custom-control-label ms-2 mb-0" for="basic_checkbox_1">Remember my preference</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <a href="/reset_password/">Forgot Password?</a>
+                                            </div>
+                                        </div>
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-primary btn-block">Sign Me In</button>
+                                        </div>
+                                    </form>
+                                    <div class="new-account mt-3">
+                                        <p>Don't have an account? <a class="text-primary" href="/signup/">Sign up</a></p>
+                                    </div>
+                                    <hr/>
+                                    <div class="new-account mt-3">
+                                        <p>Demo Login as</p>
+                                    </div>
+                                    <div class="login-btn">
+                                        <button type="button" id="Admin" class="btn btn-success    btn-sm">Admin</button>
+                                        <button type="button" id="Manager" class="btn btn-warning  btn-sm">Manager</button>
+                                        <button type="button" id="Customer" class="btn btn-secondary   btn-sm">Customer</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<!--**********************************
+	Scripts
+***********************************-->
+<!-- Required vendors -->
+
+<script src="/static/davur/vendor/global/global.min.js"></script>
+
+<script src="/static/davur/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+
+
+
+
+
+<script src="/static/davur/js/custom.js"></script>
+
+<script src="/static/davur/js/deznav-init.js"></script>
+
+
+
+
+<script>
+    $("#Admin").click(function() {
+        let email = document.getElementById("id_email");
+        email.value = "admin@example.com";
+        let password = document.getElementById("dz-password")
+        password.value = "asdf@1234";
+    });
+    $("#Manager").click(function() {
+        let email = document.getElementById("id_email").value = "manager@example.com";
+        let password = document.getElementById("dz-password").value = "asdf@1234";
+    });
+    $("#Customer").click(function() {
+        let email = document.getElementById("id_email").value = "customer@example.com";
+        let password = document.getElementById("dz-password").value = "asdf@1234";
+    });
+</script>
+
+
+</html>

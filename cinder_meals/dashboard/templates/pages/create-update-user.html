@@ -1,0 +1,189 @@
+{% extends "base/base.html" %}
+{% block page_title %}Create/Update User{% endblock page_title %}
+
+{% block content %}
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row justify-content-center h-100 align-items-center">
+            <div class="col-xl-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">New User Form</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="basic-form">
+                            <form method="post" enctype="multipart/form-data" novalidate autocomplete="off">
+                                <input type="hidden" name="csrfmiddlewaretoken"
+                                    value="GVs4V4rxwdtnZT5QxUc1U0bk9yGpYy8eIJ9Tp5DGBM7CeEpHQbJvjzWCdg2RrbiQ">
+                                <div class="row">
+                                    <div class="mb-3 col-md-6">
+                                        <div class="avatar-upload">
+                                            <div class="avatar-edit">
+                                                <input type="file" name="avatar" accept="image/*" id="id_avatar">
+                                                <label for="id_avatar"><i class="fas fa-pencil-alt"></i></label>
+                                            </div>
+                                            <div class="avatar-preview">
+                                                <div id="imagePreview"
+                                                    style="background-image: url('/media/profile/image/default.gif');">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-danger w-100 d-block mt-1">
+                                        </div>
+                                    </div>
+                                    <div class="row col-md-6">
+                                        <div class="mb-3 col-md-6">
+                                            <label class="form-label">First Name <span class="text-danger">*</span>
+                                            </label>
+                                            <input type="text" name="first_name" placeholder="First Name"
+                                                class="form-control" required id="id_first_name">
+                                            <div class="text-danger w-100 d-block mt-1">
+
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label class="form-label">Last Name <span class="text-danger">*</span>
+                                            </label>
+                                            <input type="text" name="last_name" placeholder="Last Name"
+                                                class="form-control" required id="id_last_name">
+                                            <div class="text-danger w-100 d-block mt-1">
+
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 col-md-12">
+                                            <label class="form-label">Email <span class="text-danger">*</span> </label>
+                                            <input type="email" name="email" maxlength="254" placeholder="Email"
+                                                class="form-control" required id="id_email">
+                                            <div class="text-danger w-100 d-block mt-1">
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="col-md-6 col-md-6 m-auto">
+                                        <div class="form-check form-check-inline">
+                                            <input type="checkbox" name="is_active" checked class="form-check-input"
+                                                id="id_is_active">
+                                            <label class="form-check-label">
+                                                is active
+                                            </label>
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                    <div class="mb-3 col-md-6">
+                                        <label class="form-label">Phone Number <span class="text-danger">*</span>
+                                        </label>
+                                        <input type="text" name="phone_number" placeholder="Phone Number"
+                                            class="form-control" required id="id_phone_number">
+                                        <div class="text-danger w-100 d-block mt-1">
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="mb-3 col-md-4 custom-user">
+                                            <label class="form-label">Role </label>
+                                            <select name="groups" name="groups[]" class="multi-select form-control"
+                                                id="id_groups" multiple>
+                                                <option value="1">Admin</option>
+
+                                                <option value="2">Manager</option>
+
+                                                <option value="3">Customer</option>
+
+                                            </select>
+                                            <div class="text-danger w-100 d-block mt-1">
+
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 col-md-4 custom-user">
+                                            <label class="form-label">Gender <span class="text-danger">*</span></label>
+                                            <select name="gender" class="form-control from-height-1 default-select wide"
+                                                required id="id_gender">
+                                                <option value="" selected>Choose gender</option>
+
+                                                <option value="Male">Male</option>
+
+                                                <option value="Female">Female</option>
+
+                                                <option value="Others">Others</option>
+
+                                            </select>
+                                            <div class="text-danger w-100 d-block mt-1 ">
+
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 col-md-4 custom-date-picker">
+                                            <label class="form-label">Date of Birth <span
+                                                    class="text-danger">*</span></label>
+
+                                            <input type="date" name="dob" class="form-control" required id="id_dob">
+                                            <div class="text-danger w-100 d-block mt-1">
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3 col-md-12 ">
+                                        <label class="form-label">About </label>
+                                        <textarea name="about" cols="40" rows="10" maxlength="500"
+                                            placeholder="Write About YourSelf..." style="height: 144px;"
+                                            class="form-control" id="id_about">
+</textarea>
+                                        <div class="text-danger w-100 d-block mt-1">
+
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label class="form-label">Password <span class="text-danger">*</span></label>
+                                        <div class="input-group transparent-append">
+
+
+                                            <input type="password" name="password1" id="dz-password"
+                                                placeholder="Password" class="form-control" required>
+                                            <span class="input-group-text show-pass">
+                                                <i class="fa fa-eye-slash"></i>
+                                                <i class="fa fa-eye"></i>
+                                            </span>
+                                            <div class="text-danger w-100 d-block mt-1">
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label class="form-label">Confirm Password <span
+                                                class="text-danger">*</span></label>
+                                        <div class="input-group transparent-append">
+                                            <input type="password" name="password2" id="dz-con-password"
+                                                placeholder="Confirm Password" class="form-control" required>
+                                            <span class="input-group-text show-con-pass">
+                                                <i class="fa fa-eye-slash"></i>
+                                                <i class="fa fa-eye"></i>
+                                            </span>
+                                            <div class="text-danger w-100 d-block mt-1">
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <button type="submit" class="btn btn-secondary mt-4 mb-5 ">Save</button>
+                                <a href="/users/" class="btn btn-primary mt-4 mb-5">Cancel</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
