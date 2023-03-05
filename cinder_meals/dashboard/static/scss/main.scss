@@ -1,0 +1,47 @@
+////////////////////
+// Abstracts
+////////////////////
+@import "./abstracts/abstracts";
+
+//bootstrap library scss files
+@import "./../vendor/bootstrap/scss/bootstrap";
+
+
+
+////////////////////
+// Global
+////////////////////
+@import "./base/base";
+
+@import "./preloader";
+
+
+////////////////////
+// Components
+////////////////////
+@import "./layout/layout";
+
+
+////////////////////
+// Components
+////////////////////
+@import "./components/components";
+
+
+////////////////////
+// All pages
+////////////////////
+@import "./pages/pages";
+
+
+
+////////////////////
+// RTL
+////////////////////
+@import "./layout/rtl/rtl";
+
+
+////////////////////
+// Version Color
+////////////////////
+@import "./layout/version-dark/main";

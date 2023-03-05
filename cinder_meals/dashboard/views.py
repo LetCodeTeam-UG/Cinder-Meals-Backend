@@ -9,6 +9,10 @@ class DashboardView(View):
 class LoginView(View):
     def get(self, request):
         return render(request, 'pages/login.html')
+    
+class CreateUpdateUserView(View):
+    def get(self, request):
+        return render(request, 'pages/create-update-user.html')
 
 class AnalyticsView(View):
     def get(self, request):
@@ -29,3 +33,10 @@ class MealListView(View):
     def get(self, request):
         return render(request, 'pages/meals.html')
 
+class CustomersView(View):
+    def get(self, request):
+        return render(request, 'pages/customers.html')  
+
+class UsersView(View):
+    def get(self, request):
+        return render(request, 'pages/users.html')
