@@ -51,8 +51,19 @@ class Meal(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
     published = models.BooleanField(default=False)
+    
     def __str__(self):
         return self.title
+    
+    def count_meals(self):
+        counter = 0
+        for meal in self.meals.all():
+            counter += 1
+        return counter
+    
+    def get_total_revenue(self)L
+    
+        
 
 # Oder items for the customer
 class OrderItem(models.Model):

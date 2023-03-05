@@ -1,10 +1,16 @@
 # trunk-ignore(flake8/F401)
 from django.shortcuts import render
 from django.views import View
+from dashboard.models import Meal
+
 
 class DashboardView(View):
     def get(self, request):
-        return render(request, 'pages/dashboard.html')
+        meals = Meal.objects.all().order_by('id')
+        context = {
+            'meals' : meals
+        }
+        return render(request, 'pages/dashboard.html', context)
     
 class CreateUpdateUserView(View):
     def get(self, request):
