@@ -61,7 +61,8 @@ class Meal(models.Model):
             counter += 1
         return counter
     
-    def get_total_revenue(self)L
+    # def get_total_revenue(self):
+        
     
         
 
