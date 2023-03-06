@@ -60,8 +60,7 @@ class Meal(models.Model):
         for meal in self.meals.all():
             counter += 1
         return counter
-    
-    # def get_total_revenue(self):
+
         
     
         
@@ -98,6 +97,12 @@ class Order(models.Model):
     approved = models.BooleanField(default=False)
     status = models.CharField(max_length=10, default=OrderStatus.PENDING)
     
+    def get_orders_count(self):
+        count = 0
+        for order in self.order_items.all():
+            count += 1
+        return count    
+    
     def get_order_items(self):
         order_items = []
         for order_item in self.order_items.all():
@@ -115,6 +120,13 @@ class Order(models.Model):
         for order_item in self.order_items.all():
             total += order_item.get_total()
         return total
+    
+    def get_total_revenue(self):
+        total = 0
+        for order in self.order_items.all():
+            if order.status == OrderStatus.COMPLETED:
+                total += order.get_total()
+        return float(total)
         
     def is_approved(self):
         self.status = OrderStatus.APPROVED

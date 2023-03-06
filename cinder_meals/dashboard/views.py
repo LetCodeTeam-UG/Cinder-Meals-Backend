@@ -1,14 +1,22 @@
 # trunk-ignore(flake8/F401)
 from django.shortcuts import render
 from django.views import View
-from dashboard.models import Meal
+from accounts.models import User
+from cinder_meals.utils.constants import OrderStatus
+from dashboard.models import Meal, Order
 
 
 class DashboardView(View):
     def get(self, request):
         meals = Meal.objects.all().order_by('id')
+        orders = Order.objects.all().order_by('id')
+        total_customers = User.objects.filter(is_customer=True).count()
+        total_pending_orders = Order.objects.filter(status=OrderStatus.PENDING).count()
         context = {
-            'meals' : meals
+            'meals' : meals,
+            'orders' : orders,
+            'total_pending_orders' : total_pending_orders,
+            'total_customers' : total_customers,
         }
         return render(request, 'pages/dashboard.html', context)
     
