@@ -12,13 +12,16 @@ class DashboardView(View):
     def get(self, request):
         most_selling_meals = Meal.objects.filter(published = True).order_by('-orders_count')[:5]
         meal_count = Meal.objects.filter(published=True).order_by('-id').count()
-        orders = Order.objects.all().order_by('id')
+        orders_count = Order.objects.all().count()
         total_customers = User.objects.filter(is_customer=True).count()
         total_pending_orders = Order.objects.filter(status=OrderStatus.PENDING).count()
+        orders_on_delivery_count = Order.objects.filter(status=OrderStatus.ON_DELIVERY).count()
+        orders_delivered_count = Order.objects.filter(status=OrderStatus.DELIVERED).count()
+        orders_cancelled_count = Order.objects.filter(status=OrderStatus.CANCELLED).count()
         context = {
             'most_selling_meals' : most_selling_meals,
             'meal_count' : meal_count,
-            'orders' : orders,
+            'orders_count' : orders_count,
             'total_pending_orders' : total_pending_orders,
             'total_customers' : total_customers,
         }

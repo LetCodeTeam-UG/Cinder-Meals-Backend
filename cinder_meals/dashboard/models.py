@@ -44,7 +44,7 @@ class Banner(models.Model):
 # Meals sold by the restaurant
 class Meal(models.Model):
     title = models.CharField(max_length=50)
-    type = models.CharField(max_length=10, default=MealType.ANY)
+    type = models.CharField(max_length=10, default=MealType.ANY.value)
     description = models.CharField(max_length=200)
     price = models.DecimalField(max_digits=5, decimal_places=2)
     image = models.ImageField(upload_to='meals/images/')
@@ -81,7 +81,7 @@ class OrderItem(models.Model):
 
 # Customer's Order Information
 class Order(models.Model):
-    def get_id(self):
+    def get_id():
         return int(round(time.time() * 1000))
     order_id =  models.CharField(max_length=20, default=get_id)
     user = models.ForeignKey('accounts.User', on_delete=models.CASCADE)
@@ -90,9 +90,9 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     phone = models.CharField(max_length=20)
     location = models.ForeignKey('DeliveryLocation', on_delete=models.DO_NOTHING)
-    payment_method = models.CharField(max_length=10, default=PaymentMethod.MOBILE_MONEY)
+    payment_method = models.CharField(max_length=10, default=PaymentMethod.MOBILE_MONEY.value)
     approved = models.BooleanField(default=False)
-    status = models.CharField(max_length=10, default=OrderStatus.PENDING) 
+    status = models.CharField(max_length=10, default=OrderStatus.PENDING.value) 
     
     def get_order_items(self):
         order_items = []
