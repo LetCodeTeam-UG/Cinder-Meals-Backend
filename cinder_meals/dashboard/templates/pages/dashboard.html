@@ -44,7 +44,8 @@
 
                             </span>
                             <div class="media-body">
-                                <h3 class="mb-0 text-black"><span class="counter ml-0">{{meals.count_meals}}</span></h3>
+                                <h3 class="mb-0 text-black"><span class="counter ml-0">{{meal_count}}</span></h3>
+                                </h3>
                                 <p class="mb-0">Total Meals</p>
                             </div>
                         </div>
@@ -203,52 +204,34 @@
                             <small class="mb-0">List of recent orders</small>
                         </div>
                     </div>
-                    <div class="card-body p-0 pt-3">
-                        <div class="media items-list-1">
-                            <span class="number col-1 px-0 align-self-center">#1</span>
-                            <img class="img-fluid rounded mr-3" width="85" src="/static/images/dish/pic1.jpg"
-                                alt="DexignZone">
-                            <div class="media-body col-sm-4 col-6 col-xxl-6 px-0">
-                                <h5 class="mt-0 mb-3 text-black">Tuna soup spinach with himalaya salt</h5>
-                                <small class="text-primary font-w500"><strong
-                                        class="text-secondary mr-2">$12.56</strong> MAIN COURSE</small>
-                            </div>
-                            <div class="media-footer ml-auto col-3 px-0 d-flex align-self-center align-items-center">
-                                <div>
-                                    <h3 class="mb-0 font-w600 text-black">524</h3>
-                                    <span class="fs-14">Sales (12%)</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-6 col-xxl-6 col-lg-12 col-md-12">
-                <div class="card">
-                    <div class="card-header border-0 pb-0 d-sm-flex d-block">
-                        <div>
-                            <h4 class="card-title mb-1">Most Selling Meals</h4>
-                            <small class="mb-0">Lis of top 5 Selling Meals</small>
-                        </div>
-                    </div>
+                    {% for meal in most_selling_meals %}
                     <div class="card-body tab-content">
                         <div class="tab-pane fade show active" id="monthly">
                             <div class="media mb-4 items-list-2">
-                                <img class="img-fluid rounded mr-3" width="85" src="/static/images/dish/pic5.jpg" alt="DexignZone">
+                                <img class="img-fluid rounded mr-3" width="85" src="{{meal.image.url}}"
+                                    alt="{{meal.title}}">
                                 <div class="media-body col-6 px-0">
-                                    <h5 class="mt-0 mb-1 text-black">Meidum Spicy Spagethi Italiano</h5>
-                                    <small class="text-primary font-w500 mb-3">SPAGETHI</small>
+                                    <h5 class="mt-0 mb-1 text-black">{{meal.title}}</h5>
+                                    <small class="text-primary font-w500 mb-3">{{meal.type}}</small>
                                     <span class="text-secondary mr-2 fo"></span>
                                     <ul class="fs-14 list-inline">
-                                        <li class="mr-3">Serves for 4 Person</li>
-                                        <li>24mins</li>
+                                        <li class="mr-3">Orders: {{meal.orders_count}}</li>
                                     </ul>
                                 </div>
-                                <div class="media-footer align-self-center ml-auto d-block align-items-center d-sm-flex">
-                                    <h3	class="mb-0 font-w600 text-secondary">$12.56</h3>
+                                <div
+                                    class="media-footer align-self-center ml-auto d-block align-items-center d-sm-flex">
+                                    <h3 class="mb-0 font-w600 text-secondary">₵ {{meal.price}}</h3>
                                     <div class="dropdown ml-3 ">
-                                        <button type="button" class="btn btn-secondary sharp tp-btn-light " data-toggle="dropdown">
-                                            <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+                                        <button type="button" class="btn btn-secondary sharp tp-btn-light "
+                                            data-toggle="dropdown">
+                                            <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <rect x="0" y="0" width="24" height="24"></rect>
+                                                    <circle fill="#000000" cx="5" cy="12" r="2"></circle>
+                                                    <circle fill="#000000" cx="12" cy="12" r="2"></circle>
+                                                    <circle fill="#000000" cx="19" cy="12" r="2"></circle>
+                                                </g>
+                                            </svg>
                                         </button>
                                         <div class="dropdown-menu dropdown-menu-right">
                                             <a class="dropdown-item" href="#">Edit</a>
@@ -259,6 +242,37 @@
                             </div>
                         </div>
                     </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-xl-6 col-xxl-6 col-lg-12 col-md-12">
+                <div class="card">
+                    <div class="card-header border-0 pb-0 d-sm-flex d-block">
+                        <div>
+                            <h4 class="card-title mb-1">Most Selling Meals</h4>
+                            <small class="mb-0">List of top 5 Selling Meals</small>
+                        </div>
+                    </div>
+                    {% for meal in most_selling_meals %}
+                    <div class="card-body p-0">
+                        <div class="media items-list-1">
+                            <span class="number col-1 px-0 align-self-center">#{{forloop.counter}}</span>
+                            <img class="img-fluid rounded mr-3" width="85" src="{{meal.image.url}}"
+                                alt="DexignZone">
+                            <div class="media-body col-sm-4 col-6 col-xxl-6 px-0">
+                                <h5 class="mt-0 mb-3 text-black">{{meal.title}}</h5>
+                                <small class="text-primary font-w500"><strong
+                                        class="text-secondary mr-2">₵ {{meal.price}}</strong> {{meal.type}}</small>
+                            </div>
+                            <div class="media-footer ml-auto col-3 px-0 d-flex align-self-center align-items-center">
+                                <div>
+                                    <h3 class="mb-0 font-w600 text-black">{{meal.orders_count}}</h3>
+                                    <span class="fs-14">Orders</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>

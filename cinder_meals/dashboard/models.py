@@ -48,6 +48,7 @@ class Meal(models.Model):
     description = models.CharField(max_length=200)
     price = models.DecimalField(max_digits=5, decimal_places=2)
     image = models.ImageField(upload_to='meals/images/')
+    orders_count = models.IntegerField(default = 0)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
     published = models.BooleanField(default=False)
@@ -55,13 +56,9 @@ class Meal(models.Model):
     def __str__(self):
         return self.title
     
-    def count_meals(self):
-        counter = 0
-        for meal in self.meals.all():
-            counter += 1
-        return counter
 
-        
+    class Meta:
+        db_table = 'meals'
     
         
 
@@ -95,13 +92,7 @@ class Order(models.Model):
     location = models.ForeignKey('DeliveryLocation', on_delete=models.DO_NOTHING)
     payment_method = models.CharField(max_length=10, default=PaymentMethod.MOBILE_MONEY)
     approved = models.BooleanField(default=False)
-    status = models.CharField(max_length=10, default=OrderStatus.PENDING)
-    
-    def get_orders_count(self):
-        count = 0
-        for order in self.order_items.all():
-            count += 1
-        return count    
+    status = models.CharField(max_length=10, default=OrderStatus.PENDING) 
     
     def get_order_items(self):
         order_items = []
@@ -120,34 +111,6 @@ class Order(models.Model):
         for order_item in self.order_items.all():
             total += order_item.get_total()
         return total
-    
-    def get_total_revenue(self):
-        total = 0
-        for order in self.order_items.all():
-            if order.status == OrderStatus.COMPLETED:
-                total += order.get_total()
-        return float(total)
-        
-    def is_approved(self):
-        self.status = OrderStatus.APPROVED
-        self.approved = True
-        self.save()
-        return self.status
-    
-    def is_completed(self):
-        self.status = OrderStatus.COMPLETED
-        self.save()
-        return self.status
-    
-    def is_cancelled(self):
-        self.status = OrderStatus.CANCELLED
-        self.save()
-        return self.status
-    
-    def on_delivery(self):
-        self.status = OrderStatus.ON_THE_WAY
-        self.save()
-        return self.status
     
     def __str__(self):
         return self.order_id
@@ -180,3 +143,6 @@ class Payment(models.Model):
 class DeliveryLocation(models.Model):
     name = models.CharField(max_length=200)
     delivery_fee = models.DecimalField(max_digits=5, decimal_places=2)
+    
+    def __str__(self):
+        return self.name
