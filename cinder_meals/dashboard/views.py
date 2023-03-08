@@ -14,16 +14,19 @@ class DashboardView(View):
         meal_count = Meal.objects.filter(published=True).order_by('-id').count()
         orders_count = Order.objects.all().count()
         total_customers = User.objects.filter(is_customer=True).count()
-        total_pending_orders = Order.objects.filter(status=OrderStatus.PENDING).count()
-        orders_on_delivery_count = Order.objects.filter(status=OrderStatus.ON_DELIVERY).count()
-        orders_delivered_count = Order.objects.filter(status=OrderStatus.DELIVERED).count()
-        orders_cancelled_count = Order.objects.filter(status=OrderStatus.CANCELLED).count()
+        total_pending_orders = Order.objects.filter(status=OrderStatus.PENDING.value).count()
+        orders_on_delivery_count = Order.objects.filter(status=OrderStatus.ON_THE_WAY.value).count()
+        orders_delivered_count = Order.objects.filter(status=OrderStatus.COMPLETED.value).count()
+        orders_cancelled_count = Order.objects.filter(status=OrderStatus.CANCELLED.value).count()
         context = {
             'most_selling_meals' : most_selling_meals,
             'meal_count' : meal_count,
             'orders_count' : orders_count,
             'total_pending_orders' : total_pending_orders,
             'total_customers' : total_customers,
+            'orders_on_delivery_count' : orders_on_delivery_count,
+            'orders_delivered_count' : orders_delivered_count,
+            'orders_cancelled_count' : orders_cancelled_count,
         }
         return render(request, 'pages/dashboard.html', context)
     
@@ -38,9 +41,21 @@ class AnalyticsView(View):
 class OrderView(View):
     def get(self, request):
         return render(request, 'pages/order-detail.html')
+    
 class OrderListView(View):
     def get(self, request):
         return render(request, 'pages/orders.html')
+    
+class PendingOrderListView(View):
+    def get(self, request):
+        return render(request, 'pages/pending_orders.html')
+    
+class CompletedOrderListView(View):
+    def get(self, request):
+        return render(request, 'pages/completed_orders.html')
+class CancelledOrderListView(View):
+    def get(self, request):
+        return render(request, 'pages/cancelled_orders.html')
 
 class MealView(View):
     def get(self, request):

@@ -143,26 +143,26 @@
                             <a href="javascript:void(0);"
                                 class="btn fs-22 py-1 btn-success px-4 mr-3">{{total_pending_orders}}</a>
                             <h4 class="mb-0">New Orders <i class="fa fa-circle text-success ml-1 fs-15"></i></h4>
-                            <a href="javascript:void(0);" class="ml-auto text-primary font-w500">View orders <i
+                            <a href="{% url'dashboard:pending_orders' %}" class="ml-auto text-primary font-w500">View orders <i
                                     class="ti-angle-right ml-1"></i></a>
                         </div>
                         {% endif %}
                         <div class="row">
                             <div class="col-sm-4 mb-4">
                                 <div class="border px-3 py-3 rounded-xl">
-                                    <h2 class="fs-32 font-w600 counter">{{total_pending_orders}}</h2>
+                                    <h2 class="fs-32 font-w600 counter">{{orders_on_delivery_count}}</h2>
                                     <p class="fs-13 mb-0">Delivering</p>
                                 </div>
                             </div>
                             <div class="col-sm-4 mb-4">
                                 <div class="border px-3 py-3 rounded-xl">
-                                    <h2 class="fs-32 font-w600 counter">{{total_pending_orders}}</h2>
+                                    <h2 class="fs-32 font-w600 counter">{{orders_delivered_count}}</h2>
                                     <p class="fs-14 mb-0">Delivered</p>
                                 </div>
                             </div>
                             <div class="col-sm-4 mb-4">
                                 <div class="border px-3 py-3 rounded-xl">
-                                    <h2 class="fs-32 font-w600 counter">{{total_pending_orders}}</h2>
+                                    <h2 class="fs-32 font-w600 counter">{{orders_cancelled_count}}</h2>
                                     <p class="fs-14 mb-0">Canceled</p>
                                 </div>
                             </div>
@@ -175,7 +175,7 @@
                     <div class="card-header border-0 pb-0 d-sm-flex d-block">
                         <div>
                             <h4 class="card-title mb-1">Chart Orders</h4>
-                            <small class="mb-0">Lorem ipsum dolor sit amet, consectetur</small>
+                            <small class="mb-0">Sales made from the orders</small>
                         </div>
                     </div>
                     <div class="card-body revenue-chart px-3">

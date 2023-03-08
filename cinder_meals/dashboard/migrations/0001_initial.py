@@ -61,7 +61,7 @@ class Migration(migrations.Migration):
                 ('payment_method', models.CharField(default=cinder_meals.utils.constants.PaymentMethod['MOBILE_MONEY'], max_length=10)),
                 ('approved', models.BooleanField(default=False)),
                 ('status', models.CharField(default=cinder_meals.utils.constants.OrderStatus['PENDING'], max_length=10)),
-                ('location', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='dashboard.deliverylocation')),
+                ('location', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, to='dashboard.deliverylocation')),
             ],
         ),
         migrations.CreateModel(
