@@ -48,12 +48,6 @@ class CreateUpdateUserView(View):
         password = request.POST.get('password')
         confirm = request.POST.get('confirm')
         is_active = request.POST.get('is_active')
-        print(is_active)
-        print(role)
-        print(email)
-        print(password)
-        print(confirm)
-        print(dob)
         context = {k : v for k, v in request.POST.items()}
         try: 
             user = User.objects.filter(email=email).first()
@@ -127,8 +121,26 @@ class MealListView(View):
 
 class CustomersView(View):
     def get(self, request):
-        return render(request, 'pages/customers.html')  
+        customers = User.objects.filter(is_customer=True).order_by("-id")
+        print(customers)
+        context = {
+            "customers":customers,
+        }
+        return render(request, 'pages/customers.html',context)  
+
+class CouriersView(View):
+    def get(self, request):
+        customers = User.objects.filter(is_customer=True).order_by("-id")
+        print(customers)
+        context = {
+            "customers":customers,
+        }
+        return render(request, 'pages/customers.html',context)  
 
 class UsersView(View):
     def get(self, request):
-        return render(request, 'pages/users.html')
+        users = User.objects.all().order_by('-id')
+        context = {
+            "users":users,
+        }
+        return render(request, 'pages/users.html', context)

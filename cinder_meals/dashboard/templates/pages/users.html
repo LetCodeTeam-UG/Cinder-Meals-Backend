@@ -16,25 +16,14 @@
             {% endif %}
             <div class="card">
                 <div class="card-header flex-wrap">
-                    <h4 class="card-title mb-2">Users Table</h4>
-
+                    <h4 class="card-title mb-2">List of All Users</h4>
                     <div class="d-flex mb-2">
-
-
-
                         <button type="submit" id="delete_multiple_btn"
-                            class="btn light btn-outline-primary btn-sm me-2 ">Delete</button>
-
-
-
-
-                        <a href="/add-user/" class="btn btn-primary btn-sm ">ADD USER <span class="btn-icon-end">
+                            class="btn light btn-outline-primary btn-sm mx-2 ">Delete</button>
+                        <a href="{% url 'dashboard:create_update_user' %}" class="btn btn-primary btn-sm ">ADD USER <span class="btn-icon-end">
                                 <i class="fa fa-plus"></i></span>
                         </a>
-
-
                     </div>
-
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -42,469 +31,78 @@
                             <thead>
                                 <tr>
                                     <th style="width:50px;">
-                                        <div class="form-check custom-checkbox checkbox-primary check-lg me-3">
+                                        <div class="form-check custom-checkbox checkbox-primary check-lg mx-3">
                                             <input type="checkbox" class="form-check-input" id="checkAll" value="">
                                             <label class="form-check-label" for="checkAll"></label>
                                         </div>
                                     </th>
-
                                     <th>Full Name</th>
                                     <th>Email</th>
                                     <th>Gender</th>
                                     <th>Groups</th>
                                     <th>Mobile</th>
-                                    <th>Date of Birth</th>
                                     <th>Status</th>
-
-
-
+                                    <th>Action</th>
                                     <th></th>
-
-
-
-
                                 </tr>
                             </thead>
                             <tbody>
                                 <input type="hidden" name="csrfmiddlewaretoken"
                                     value="lgjqofQB7x0e2DpSajhemS3xPwjvpnrsn40fSg2Kc6EthoJJtAOILrOPTeFXS0B4">
-
-                                <tr id="2">
+                                {% for user in users %}
+                                <tr id="{{forloop.counter}}">
                                     <td>
-                                        <div class="form-check custom-checkbox checkbox-primary check-lg me-3">
-                                            <input name="user_id[]" type="checkbox" class="form-check-input" value="2">
+                                        <div class="form-check custom-checkbox checkbox-primary check-lg mx-3">
+                                            <input name="{{user.id}}" type="checkbox" class="form-check-input" value="2">
                                             <label class="form-check-label" for="checkbox-2"></label>
                                         </div>
                                     </td>
-
-
                                     <td>
                                         <a href="/user-details/2/">
-                                            <div class="d-flex align-items-center">
-                                                <img src="/media/admin@example.com/5.jpg" class="rounded-lg me-2"
-                                                    width="24" alt="">
-                                                <span class="w-space-no">Gaurav Nagar</span>
+                                            <div class="d-flex text-align-center">
+                                                <div class="w-space-no">{{user.fullname}}</div>
                                             </div>
                                         </a>
                                     </td>
-                                    <td><strong>admin@example.com</strong></td>
-                                    <td>Male</td>
-
-
+                                    <td><strong>{{user.email}}</strong></td>
+                                    <td>{{user.gender}}</td>
                                     <td>
 
                                         <span class="badge  badge-xs badge-primary light">Admin</span>
 
                                     </td>
-                                    <td>9532511475</td>
-                                    <td>1993-02-02</td>
+                                    <td>{{user.phone}}</td>
                                     <td>
-                                        <div class="d-flex align-items-center">
-
-                                            <i class="fa fa-circle text-success me-1"></i>
-
+                                        <div class="d-flex text-align-center">
+                                            <i class="fa fa-circle text-success mx-1"></i>
                                         </div>
-
                                     </td>
                                     <td>
                                         <div class="sweetalert">
                                             <div class="d-flex">
-
                                                 <a href="/assign-permissions-to-user/2/"
-                                                    class="btn btn-success shadow btn-xs sharp me-1"><i
-                                                        class="fa fa-shield-alt"></i></a>
-
-
+                                                    class="btn btn-success shadow btn-xs sharp mx-1"><i
+                                                        class="fa fa-shield"></i></a>
                                                 <a href="/edit-user/2/"
-                                                    class="btn btn-primary shadow btn-xs sharp me-1"><i
-                                                        class="fa fa-pencil-alt"></i></a>
-
-
+                                                    class="btn btn-primary shadow btn-xs sharp mx-1"><i
+                                                        class="fa fa-pencil"></i></a>
                                                 <a href="/delete-user/2/"
                                                     class="btn btn-danger shadow btn-xs sharp sweet-success-cancel"><i
                                                         class="fa fa-trash"></i></a>
-
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
-
-                                <tr id="4">
-                                    <td>
-                                        <div class="form-check custom-checkbox checkbox-primary check-lg me-3">
-                                            <input name="user_id[]" type="checkbox" class="form-check-input" value="4">
-                                            <label class="form-check-label" for="checkbox-4"></label>
-                                        </div>
-                                    </td>
-
-
-                                    <td>
-                                        <a href="/user-details/4/">
-                                            <div class="d-flex align-items-center">
-                                                <img src="/media/customer@example.com/11.jpg" class="rounded-lg me-2"
-                                                    width="24" alt="">
-                                                <span class="w-space-no">Ravi Sharma</span>
-                                            </div>
-                                        </a>
-                                    </td>
-                                    <td><strong>customer@example.com</strong></td>
-                                    <td>Male</td>
-
-
-                                    <td>
-
-                                        <span class="badge  badge-xs badge-primary light">Customer</span>
-
-                                    </td>
-                                    <td>9752544125</td>
-                                    <td>1993-02-02</td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-
-                                            <i class="fa fa-circle text-success me-1"></i>
-
-                                        </div>
-
-                                    </td>
-                                    <td>
-                                        <div class="sweetalert">
-                                            <div class="d-flex">
-
-                                                <a href="/assign-permissions-to-user/4/"
-                                                    class="btn btn-success shadow btn-xs sharp me-1"><i
-                                                        class="fa fa-shield-alt"></i></a>
-
-
-                                                <a href="/edit-user/4/"
-                                                    class="btn btn-primary shadow btn-xs sharp me-1"><i
-                                                        class="fa fa-pencil-alt"></i></a>
-
-
-                                                <a href="/delete-user/4/"
-                                                    class="btn btn-danger shadow btn-xs sharp sweet-success-cancel"><i
-                                                        class="fa fa-trash"></i></a>
-
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <tr id="17">
-                                    <td>
-                                        <div class="form-check custom-checkbox checkbox-primary check-lg me-3">
-                                            <input name="user_id[]" type="checkbox" class="form-check-input" value="17">
-                                            <label class="form-check-label" for="checkbox-17"></label>
-                                        </div>
-                                    </td>
-
-
-                                    <td>
-                                        <a href="/user-details/17/">
-                                            <div class="d-flex align-items-center">
-                                                <img src="/media/profile/image/default.gif" class="rounded-lg me-2"
-                                                    width="24" alt="">
-                                                <span class="w-space-no">Abhinav Parakh</span>
-                                            </div>
-                                        </a>
-                                    </td>
-                                    <td><strong>abhinavparakh19@gmail.com</strong></td>
-                                    <td></td>
-
-
-                                    <td>
-
-                                        <span class="badge  badge-xs badge-primary light">Customer</span>
-
-                                    </td>
-                                    <td></td>
-                                    <td>None</td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-
-                                            <i class="fa fa-circle text-success me-1"></i>
-
-                                        </div>
-
-                                    </td>
-                                    <td>
-                                        <div class="sweetalert">
-                                            <div class="d-flex">
-
-                                                <a href="/assign-permissions-to-user/17/"
-                                                    class="btn btn-success shadow btn-xs sharp me-1"><i
-                                                        class="fa fa-shield-alt"></i></a>
-
-
-                                                <a href="/edit-user/17/"
-                                                    class="btn btn-primary shadow btn-xs sharp me-1"><i
-                                                        class="fa fa-pencil-alt"></i></a>
-
-
-                                                <a href="/delete-user/17/"
-                                                    class="btn btn-danger shadow btn-xs sharp sweet-success-cancel"><i
-                                                        class="fa fa-trash"></i></a>
-
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <tr id="18">
-                                    <td>
-                                        <div class="form-check custom-checkbox checkbox-primary check-lg me-3">
-                                            <input name="user_id[]" type="checkbox" class="form-check-input" value="18">
-                                            <label class="form-check-label" for="checkbox-18"></label>
-                                        </div>
-                                    </td>
-
-
-                                    <td>
-                                        <a href="/user-details/18/">
-                                            <div class="d-flex align-items-center">
-                                                <img src="/media/profile/image/default.gif" class="rounded-lg me-2"
-                                                    width="24" alt="">
-                                                <span class="w-space-no">ahlawy1 demo@example.com</span>
-                                            </div>
-                                        </a>
-                                    </td>
-                                    <td><strong>demo@example.com</strong></td>
-                                    <td></td>
-
-
-                                    <td>
-
-                                        <span class="badge  badge-xs badge-primary light">Customer</span>
-
-                                    </td>
-                                    <td></td>
-                                    <td>None</td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-
-                                            <i class="fa fa-circle text-dark me-1"></i>
-
-
-                                        </div>
-
-                                    </td>
-                                    <td>
-                                        <div class="sweetalert">
-                                            <div class="d-flex">
-
-                                                <a href="/assign-permissions-to-user/18/"
-                                                    class="btn btn-success shadow btn-xs sharp me-1"><i
-                                                        class="fa fa-shield-alt"></i></a>
-
-
-                                                <a href="/edit-user/18/"
-                                                    class="btn btn-primary shadow btn-xs sharp me-1"><i
-                                                        class="fa fa-pencil-alt"></i></a>
-
-
-                                                <a href="/delete-user/18/"
-                                                    class="btn btn-danger shadow btn-xs sharp sweet-success-cancel"><i
-                                                        class="fa fa-trash"></i></a>
-
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <tr id="21">
-                                    <td>
-                                        <div class="form-check custom-checkbox checkbox-primary check-lg me-3">
-                                            <input name="user_id[]" type="checkbox" class="form-check-input" value="21">
-                                            <label class="form-check-label" for="checkbox-21"></label>
-                                        </div>
-                                    </td>
-
-
-                                    <td>
-                                        <a href="/user-details/21/">
-                                            <div class="d-flex align-items-center">
-                                                <img src="/media/profile/image/default.gif" class="rounded-lg me-2"
-                                                    width="24" alt="">
-                                                <span class="w-space-no">mehmet emin parlakay</span>
-                                            </div>
-                                        </a>
-                                    </td>
-                                    <td><strong>mparlakay06@gmail.com</strong></td>
-                                    <td></td>
-
-
-                                    <td>
-
-                                        <span class="badge  badge-xs badge-primary light">Customer</span>
-
-                                    </td>
-                                    <td></td>
-                                    <td>None</td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-
-                                            <i class="fa fa-circle text-success me-1"></i>
-
-                                        </div>
-
-                                    </td>
-                                    <td>
-                                        <div class="sweetalert">
-                                            <div class="d-flex">
-
-                                                <a href="/assign-permissions-to-user/21/"
-                                                    class="btn btn-success shadow btn-xs sharp me-1"><i
-                                                        class="fa fa-shield-alt"></i></a>
-
-
-                                                <a href="/edit-user/21/"
-                                                    class="btn btn-primary shadow btn-xs sharp me-1"><i
-                                                        class="fa fa-pencil-alt"></i></a>
-
-
-                                                <a href="/delete-user/21/"
-                                                    class="btn btn-danger shadow btn-xs sharp sweet-success-cancel"><i
-                                                        class="fa fa-trash"></i></a>
-
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <tr id="23">
-                                    <td>
-                                        <div class="form-check custom-checkbox checkbox-primary check-lg me-3">
-                                            <input name="user_id[]" type="checkbox" class="form-check-input" value="23">
-                                            <label class="form-check-label" for="checkbox-23"></label>
-                                        </div>
-                                    </td>
-
-
-                                    <td>
-                                        <a href="/user-details/23/">
-                                            <div class="d-flex align-items-center">
-                                                <img src="/media/profile/image/default.gif" class="rounded-lg me-2"
-                                                    width="24" alt="">
-                                                <span class="w-space-no">mohamed selem</span>
-                                            </div>
-                                        </a>
-                                    </td>
-                                    <td><strong>mafia.shooter1996@gmail.com</strong></td>
-                                    <td></td>
-
-
-                                    <td>
-
-                                        <span class="badge  badge-xs badge-primary light">Customer</span>
-
-                                    </td>
-                                    <td></td>
-                                    <td>None</td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-
-                                            <i class="fa fa-circle text-success me-1"></i>
-
-                                        </div>
-
-                                    </td>
-                                    <td>
-                                        <div class="sweetalert">
-                                            <div class="d-flex">
-
-                                                <a href="/assign-permissions-to-user/23/"
-                                                    class="btn btn-success shadow btn-xs sharp me-1"><i
-                                                        class="fa fa-shield-alt"></i></a>
-
-
-                                                <a href="/edit-user/23/"
-                                                    class="btn btn-primary shadow btn-xs sharp me-1"><i
-                                                        class="fa fa-pencil-alt"></i></a>
-
-
-                                                <a href="/delete-user/23/"
-                                                    class="btn btn-danger shadow btn-xs sharp sweet-success-cancel"><i
-                                                        class="fa fa-trash"></i></a>
-
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <tr id="24">
-                                    <td>
-                                        <div class="form-check custom-checkbox checkbox-primary check-lg me-3">
-                                            <input name="user_id[]" type="checkbox" class="form-check-input" value="24">
-                                            <label class="form-check-label" for="checkbox-24"></label>
-                                        </div>
-                                    </td>
-
-
-                                    <td>
-                                        <a href="/user-details/24/">
-                                            <div class="d-flex align-items-center">
-                                                <img src="/media/profile/image/default.gif" class="rounded-lg me-2"
-                                                    width="24" alt="">
-                                                <span class="w-space-no">Zain Fiaz</span>
-                                            </div>
-                                        </a>
-                                    </td>
-                                    <td><strong>zainfb1122@gmail.com</strong></td>
-                                    <td></td>
-
-
-                                    <td>
-
-                                        <span class="badge  badge-xs badge-primary light">Customer</span>
-
-                                    </td>
-                                    <td></td>
-                                    <td>None</td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-
-                                            <i class="fa fa-circle text-dark me-1"></i>
-
-
-                                        </div>
-
-                                    </td>
-                                    <td>
-                                        <div class="sweetalert">
-                                            <div class="d-flex">
-
-                                                <a href="/assign-permissions-to-user/24/"
-                                                    class="btn btn-success shadow btn-xs sharp me-1"><i
-                                                        class="fa fa-shield-alt"></i></a>
-
-
-                                                <a href="/edit-user/24/"
-                                                    class="btn btn-primary shadow btn-xs sharp me-1"><i
-                                                        class="fa fa-pencil-alt"></i></a>
-
-
-                                                <a href="/delete-user/24/"
-                                                    class="btn btn-danger shadow btn-xs sharp sweet-success-cancel"><i
-                                                        class="fa fa-trash"></i></a>
-
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-
+                                {% endfor %}
                             </tbody>
                         </table>
                     </div>
-
-
                     <nav mt-5>
-
                         <p>
                             <span class="current">
                                 Page 1 of 3.
                             </span>
                         </p>
-
-
                         <ul class="pagination pagination-gutter  justify-content-end">
 
                             <li class="page-item page-indicator ">
@@ -513,14 +111,8 @@
                                                         ">
                                     <i class="la la-angle-left"></i></a>
                             </li>
-
-
-
                             <li class="page-item 
                                             active"><a class="page-link" href="?page=1">1</a></li>
-
-
-
                             <li class="page-item "><a class="page-link" href="?page=2">2</a></li>
                             <li class="page-item "><a class="page-link" href="?page=3">3</a></li>
                             <li class="page-item page-indicator ">
@@ -532,14 +124,10 @@
                             <li>
                             </li>
                         </ul>
-
                     </nav>
                 </div>
             </div>
         </div>
-
-
-
     </div>
 </div>
 {% endblock content %}

@@ -9,7 +9,7 @@
                 <h2 class="text-black font-w600 mb-0">Dashboard</h2>
             </div>
             <div class="dropdown custom-dropdown">
-                <div class="btn btn-sm btn-primary light d-flex align-items-center svg-btn" data-toggle="dropdown">
+                <div class="btn btn-sm btn-primary light d-flex text-align-center svg-btn" data-toggle="dropdown">
                     <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g>
                             <path
@@ -139,7 +139,7 @@
                     </div>
                     <div class="card-body orders-summary">
                         {% if total_pending_orders %}
-                        <div class="d-flex order-manage p-3 align-items-center mb-4">
+                        <div class="d-flex order-manage p-3 text-align-center mb-4">
                             <a href="javascript:void(0);"
                                 class="btn fs-22 py-1 btn-success px-4 mr-3">{{total_pending_orders}}</a>
                             <h4 class="mb-0">New Orders <i class="fa fa-circle text-success ml-1 fs-15"></i></h4>
@@ -219,7 +219,7 @@
                                     </ul>
                                 </div>
                                 <div
-                                    class="media-footer align-self-center ml-auto d-block align-items-center d-sm-flex">
+                                    class="media-footer align-self-center ml-auto d-block text-align-center d-sm-flex">
                                     <h3 class="mb-0 font-w600 text-secondary">₵ {{meal.price}}</h3>
                                     <div class="dropdown ml-3 ">
                                         <button type="button" class="btn btn-secondary sharp tp-btn-light "
@@ -264,7 +264,7 @@
                                 <small class="text-primary font-w500"><strong
                                         class="text-secondary mr-2">₵ {{meal.price}}</strong> {{meal.type}}</small>
                             </div>
-                            <div class="media-footer ml-auto col-3 px-0 d-flex align-self-center align-items-center">
+                            <div class="media-footer ml-auto col-3 px-0 d-flex align-self-center text-align-center">
                                 <div>
                                     <h3 class="mb-0 font-w600 text-black">{{meal.orders_count}}</h3>
                                     <span class="fs-14">Orders</span>
