@@ -12,11 +12,22 @@
                     </div>
                     <div class="card-body">
                         <div class="basic-form">
-                            <form method="post" enctype="multipart/form-data" novalidate autocomplete="off">
-                                <input type="hidden" name="csrfmiddlewaretoken"
-                                    value="GVs4V4rxwdtnZT5QxUc1U0bk9yGpYy8eIJ9Tp5DGBM7CeEpHQbJvjzWCdg2RrbiQ">
+                            <form action="{% url 'dashboard:create_update_user' %}" method="post"
+                                enctype="multipart/form-data" novalidate autocomplete="off">
+                                {% if messages %}
+                                {% for message in messages %}
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <strong>{{ message }}</strong>
+                                </div>
+                                {% endfor %}
+                                {% endif %}
+                                {% csrf_token %}
                                 <div class="row">
-                                    <div class="mb-3 col-md-6">
+                                    <!-- fix upload profile later -->
+                                    <!-- <div class="mb-3 col-md-6">
                                         <div class="avatar-upload">
                                             <div class="avatar-edit">
                                                 <input type="file" name="avatar" accept="image/*" id="id_avatar">
@@ -30,12 +41,12 @@
                                         </div>
                                         <div class="text-danger w-100 d-block mt-1">
                                         </div>
-                                    </div>
-                                    <div class="row col-md-6">
+                                    </div> -->
+                                    <div class="row col-md-12">
                                         <div class="mb-3 col-md-6">
                                             <label class="form-label">First Name <span class="text-danger">*</span>
                                             </label>
-                                            <input type="text" name="first_name" placeholder="First Name"
+                                            <input type="text" name="first_name" placeholder="First Name" value="{{first_name}}"
                                                 class="form-control" required id="id_first_name">
                                             <div class="text-danger w-100 d-block mt-1">
 
@@ -44,37 +55,25 @@
                                         <div class="mb-3 col-md-6">
                                             <label class="form-label">Last Name <span class="text-danger">*</span>
                                             </label>
-                                            <input type="text" name="last_name" placeholder="Last Name"
+                                            <input type="text" name="last_name" placeholder="Last Name" value="{{last_name}}"
                                                 class="form-control" required id="id_last_name">
                                             <div class="text-danger w-100 d-block mt-1">
 
                                             </div>
                                         </div>
-                                        <div class="mb-3 col-md-12">
-                                            <label class="form-label">Email <span class="text-danger">*</span> </label>
-                                            <input type="email" name="email" maxlength="254" placeholder="Email"
-                                                class="form-control" required id="id_email">
-                                            <div class="text-danger w-100 d-block mt-1">
-
-                                            </div>
-                                        </div>
-
                                     </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label class="form-label">Email <span class="text-danger">*</span> </label>
+                                        <input type="email" name="email" maxlength="254" placeholder="Email" value="{{email}}"
+                                            class="form-control" required id="id_email">
+                                        <div class="text-danger w-100 d-block mt-1">
 
-
-                                    <div class="col-md-6 col-md-6 m-auto">
-                                        <div class="form-check form-check-inline">
-                                            <input type="checkbox" name="is_active" checked class="form-check-input"
-                                                id="id_is_active">
-                                            <label class="form-check-label">
-                                                is active
-                                            </label>
                                         </div>
                                     </div>
                                     <div class="mb-3 col-md-6">
                                         <label class="form-label">Phone Number <span class="text-danger">*</span>
                                         </label>
-                                        <input type="text" name="phone_number" placeholder="Phone Number"
+                                        <input type="text" name="phone_number" placeholder="Phone Number" value="{{phone_number}}"
                                             class="form-control" required id="id_phone_number">
                                         <div class="text-danger w-100 d-block mt-1">
 
@@ -82,44 +81,42 @@
                                     </div>
 
 
-                                    <div class="row">
+                                    <div class="row col-md-12">
                                         <div class="mb-3 col-md-4 custom-user">
                                             <label class="form-label">Role </label>
-                                            <select name="groups" name="groups[]" class="multi-select form-control"
-                                                id="id_groups" multiple>
-                                                <option value="1">Admin</option>
+                                            <select name="group" class="form-control" id="id_group">
+                                                <option value="{{group}}" selected>Choose Group</option>
+                                                <option value="Admin">Admin</option>
 
-                                                <option value="2">Manager</option>
+                                                <option value="Courier">Courier</option>
 
-                                                <option value="3">Customer</option>
+                                                <option value="Customer">Customer</option>
 
                                             </select>
                                             <div class="text-danger w-100 d-block mt-1">
 
                                             </div>
                                         </div>
-                                        <div class="mb-3 col-md-4 custom-user">
+                                        <div class="mb-3 col-md-3 custom-user">
                                             <label class="form-label">Gender <span class="text-danger">*</span></label>
                                             <select name="gender" class="form-control from-height-1 default-select wide"
                                                 required id="id_gender">
-                                                <option value="" selected>Choose gender</option>
+                                                <option value="{{gender}}" selected>Choose gender</option>
 
                                                 <option value="Male">Male</option>
 
                                                 <option value="Female">Female</option>
-
-                                                <option value="Others">Others</option>
 
                                             </select>
                                             <div class="text-danger w-100 d-block mt-1 ">
 
                                             </div>
                                         </div>
-                                        <div class="mb-3 col-md-4 custom-date-picker">
+                                        <div class="mb-3 col-md-3 custom-date-picker">
                                             <label class="form-label">Date of Birth <span
                                                     class="text-danger">*</span></label>
 
-                                            <input type="date" name="dob" class="form-control" required id="id_dob">
+                                            <input type="date" name="dob" value="{{dob}}" class="form-control" required id="id_dob">
                                             <div class="text-danger w-100 d-block mt-1">
 
                                             </div>
@@ -128,7 +125,7 @@
                                     <div class="mb-3 col-md-6">
                                         <label class="form-label">Password <span class="text-danger">*</span></label>
                                         <div class="input-group transparent-append">
-                                            <input type="password" name="password1" id="dz-password"
+                                            <input type="password" name="password" id="dz-password" value="{{password}}"
                                                 placeholder="Password" class="form-control" required>
                                             <div class="text-danger w-100 d-block mt-1">
 
@@ -140,17 +137,16 @@
                                         <label class="form-label">Confirm Password <span
                                                 class="text-danger">*</span></label>
                                         <div class="input-group transparent-append">
-                                            <input type="password" name="password2" id="dz-con-password"
+                                            <input type="password" name="confirm" id="dz-con-password" value="{{confirm}}"
                                                 placeholder="Confirm Password" class="form-control" required>
                                             <div class="text-danger w-100 d-block mt-1">
 
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                                 <button type="submit" class="btn btn-secondary mt-4 mb-5 ">Save</button>
-                                <a href="/users/" class="btn btn-primary mt-4 mb-5">Cancel</a>
+                                <a href="/" class="btn btn-primary mt-4 mb-5">Cancel</a>
                             </form>
                         </div>
                     </div>

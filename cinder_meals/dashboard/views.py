@@ -1,5 +1,6 @@
-# trunk-ignore(flake8/F401)
-from django.shortcuts import render
+from django.contrib import messages
+from django.shortcuts import redirect, render
+from django.urls import reverse
 from django.views import View
 from accounts.models import User
 from cinder_meals.utils.constants import OrderStatus
@@ -31,8 +32,67 @@ class DashboardView(View):
         return render(request, 'pages/dashboard.html', context)
     
 class CreateUpdateUserView(View):
+    template_name = 'pages/create-update-user.html'
     def get(self, request):
-        return render(request, 'pages/create-update-user.html')
+        return render(request, self.template_name)
+    
+    def post(self, request):
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        fullname = first_name + ' ' + last_name
+        email = request.POST.get('email')
+        phone = request.POST.get('phone_number')
+        role = request.POST.get('group')
+        gender = request.POST.get('gender')
+        dob = request.POST.get('dob')
+        password = request.POST.get('password')
+        confirm = request.POST.get('confirm')
+        is_active = request.POST.get('is_active')
+        print(is_active)
+        print(role)
+        print(email)
+        print(password)
+        print(confirm)
+        print(dob)
+        context = {k : v for k, v in request.POST.items()}
+        try: 
+            user = User.objects.filter(email=email).first()
+            if user:
+                messages.error(request, 'User with this email already exists')
+                return render(request, self.template_name, context)
+            
+            else:
+                if password == confirm:
+                    user = User.objects.create_user(
+                        fullname=fullname,
+                        email=email,
+                        phone=phone,
+                        gender=gender,
+                        dob=dob,
+                        password=password,
+                    )
+                    if role == 'admin':
+                        user.is_admin = True
+                    elif role == 'courier':
+                        user.is_courier = True
+                    elif role == 'customer':
+                        user.is_customer = True
+                    user.save()
+                    messages.success(request, 'User created successfully')
+                    redirect_url = reverse('dashboard:users')
+                    return redirect(redirect_url)
+                
+                else:
+                    messages.error(request, 'Passwords do not match')
+                    return render(request, self.template_name, context)
+        except Exception as e:
+            for error in e.args:
+                messages.error(request, error)
+            return render(request, self.template_name, context)
+                    
+                        
+                    
+        
 
 class AnalyticsView(View):
     def get(self, request):
