@@ -139,7 +139,11 @@ class MealView(View):
 class MealListView(View):
     @method_decorator(AdminAndCourierOnly)
     def get(self, request):
-        return render(request, 'pages/meals.html')
+        meals = Meal.objects.filter(published = True).order_by('-id')
+        context = {
+            'meals' : meals,
+        }
+        return render(request, 'pages/meals.html',context)
 
 class CustomersView(View):
     @method_decorator(AdminAndCourierOnly)
