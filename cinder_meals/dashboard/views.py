@@ -33,8 +33,21 @@ class DashboardView(View):
     
 class CreateUpdateUserView(View):
     template_name = 'pages/create-update-user.html'
+    @method_decorator(AdminAndCourierOnly)
     def get(self, request):
-        return render(request, self.template_name)
+        user_id = request.GET.get('user_id')
+        if user_id:
+            try:
+                user = User.objects.get(id=user_id)
+                user.delete()
+                messages.success(request, 'User deleted successfully')
+                return redirect(request.META.get('HTTP_REFERER'))
+            except Exception as e:
+                for error in e.args:
+                    messages.error(request, error)
+                return redirect(request.META.get('HTTP_REFERER'))
+        else:
+            return render(request, self.template_name)
     
     def post(self, request):
         first_name = request.POST.get('first_name')
@@ -65,11 +78,11 @@ class CreateUpdateUserView(View):
                         dob=dob,
                         password=password,
                     )
-                    if role == 'admin':
+                    if role == 'Admin':
                         user.is_admin = True
-                    elif role == 'courier':
+                    elif role == 'Courier':
                         user.is_courier = True
-                    elif role == 'customer':
+                    elif role == 'Customer':
                         user.is_customer = True
                     user.save()
                     messages.success(request, 'User created successfully')
@@ -83,61 +96,71 @@ class CreateUpdateUserView(View):
             for error in e.args:
                 messages.error(request, error)
             return render(request, self.template_name, context)
-                    
-                        
+        
+
+        
                     
         
 
 class AnalyticsView(View):
+    @method_decorator(AdminAndCourierOnly)
     def get(self, request):
         return render(request, 'pages/analytics.html')
 
 class OrderView(View):
+    @method_decorator(AdminAndCourierOnly)
     def get(self, request):
         return render(request, 'pages/order-detail.html')
     
 class OrderListView(View):
+    @method_decorator(AdminAndCourierOnly)
     def get(self, request):
         return render(request, 'pages/orders.html')
     
 class PendingOrderListView(View):
+    @method_decorator(AdminAndCourierOnly)
     def get(self, request):
         return render(request, 'pages/pending_orders.html')
     
 class CompletedOrderListView(View):
+    @method_decorator(AdminAndCourierOnly)
     def get(self, request):
         return render(request, 'pages/completed_orders.html')
 class CancelledOrderListView(View):
+    @method_decorator(AdminAndCourierOnly)
     def get(self, request):
         return render(request, 'pages/cancelled_orders.html')
 
 class MealView(View):
+    @method_decorator(AdminAndCourierOnly)
     def get(self, request):
         return render(request, 'pages/meal-detail.html')
     
 class MealListView(View):
+    @method_decorator(AdminAndCourierOnly)
     def get(self, request):
         return render(request, 'pages/meals.html')
 
 class CustomersView(View):
+    @method_decorator(AdminAndCourierOnly)
     def get(self, request):
         customers = User.objects.filter(is_customer=True).order_by("-id")
-        print(customers)
         context = {
             "customers":customers,
         }
         return render(request, 'pages/customers.html',context)  
 
 class CouriersView(View):
+    @method_decorator(AdminAndCourierOnly)
     def get(self, request):
-        customers = User.objects.filter(is_customer=True).order_by("-id")
-        print(customers)
+        courier = User.objects.filter(is_courier=True).order_by("-id")
         context = {
-            "customers":customers,
+            "courier":courier,
         }
-        return render(request, 'pages/customers.html',context)  
+        return render(request, 'pages/couriers.html',context)  
 
 class UsersView(View):
+    @method_decorator(AdminAndCourierOnly)
     def get(self, request):
         users = User.objects.all().order_by('-id')
         context = {

@@ -68,7 +68,15 @@
                                     <td>{{user.gender}}</td>
                                     <td>
 
-                                        <span class="badge  badge-xs badge-primary light">Admin</span>
+                                        <span class="badge  badge-xs badge-primary light">
+                                            {% if user.is_admin %}
+                                              Admin
+                                              {% elif user.is_customer %}
+                                              Customer
+                                              {% elif user.is_courier %}
+                                                Courier
+                                            {% endif %}
+                                        </span>
 
                                     </td>
                                     <td>{{user.phone}}</td>
@@ -80,13 +88,13 @@
                                     <td>
                                         <div class="sweetalert">
                                             <div class="d-flex">
-                                                <a href="/assign-permissions-to-user/2/"
+                                                <!-- <a href="/assign-permissions-to-user/2/"
                                                     class="btn btn-success shadow btn-xs sharp mx-1"><i
-                                                        class="fa fa-shield"></i></a>
+                                                        class="fa fa-shield"></i></a> -->
                                                 <a href="/edit-user/2/"
                                                     class="btn btn-primary shadow btn-xs sharp mx-1"><i
                                                         class="fa fa-pencil"></i></a>
-                                                <a href="/delete-user/2/"
+                                                <a href="{% url 'dashboard:create_update_user' %}?user_id={{user.id}}"
                                                     class="btn btn-danger shadow btn-xs sharp sweet-success-cancel"><i
                                                         class="fa fa-trash"></i></a>
                                             </div>

@@ -73,7 +73,7 @@
                                     <td>{{customer.gender}}</td>
                                     <td>
 
-                                        <span class="badge  badge-xs badge-primary light">Admin</span>
+                                        <span class="badge  badge-xs badge-primary light">Customer</span>
 
                                     </td>
                                     <td>{{customer.phone}}</td>
@@ -91,7 +91,7 @@
                                                 <a href="/edit-customer/2/"
                                                     class="btn btn-primary shadow btn-xs sharp mx-1"><i
                                                         class="fa fa-pencil"></i></a>
-                                                <a href="/delete-customer/2/"
+                                                <a href="{% url 'dashboard:create_update_user' %}?user_id={{customer.id}}"
                                                     class="btn btn-danger shadow btn-xs sharp sweet-success-cancel"><i
                                                         class="fa fa-trash"></i></a>
                                             </div>

@@ -1,5 +1,5 @@
 {% extends "base/base.html" %}
-{% block page_title %}Customers{% endblock %}
+{% block page_title %}couriers{% endblock %}
 {% block content %}
 <div class="content-body">
     <div class="container-fluid">
@@ -16,7 +16,7 @@
             {% endif %}
             <div class="card">
                 <div class="card-header flex-wrap">
-                    <h4 class="card-title mb-2">List of All Customers</h4>
+                    <h4 class="card-title mb-2">List of All Couriers</h4>
                     <div class="d-flex mb-2">
                         <button type="submit" id="delete_multiple_btn"
                             class="btn light btn-outline-primary btn-sm mx-2 ">Delete</button>
@@ -25,7 +25,7 @@
                                 <span class="fs-16 ml-3">Filter</span>
                                 <i class="fa fa-angle-down scale5 ml-3"></i>
                             </button> -->
-                        <a href="{% url 'dashboard:create_update_user' %}" class="btn btn-primary btn-sm fs-16">ADD customer <span class="btn-icon-end">
+                        <a href="{% url 'dashboard:create_update_user' %}" class="btn btn-primary btn-sm fs-16">ADD + <span class="btn-icon-end">
                                 <i class="fa fa-plus"></i></span>
                         </a>
                     </div>
@@ -54,29 +54,29 @@
                             <tbody>
                                 <input type="hidden" name="csrfmiddlewaretoken"
                                     value="lgjqofQB7x0e2DpSajhemS3xPwjvpnrsn40fSg2Kc6EthoJJtAOILrOPTeFXS0B4">
-                                {% for customer in customers %}
+                                {% for courier in couriers %}
                                 <tr id="{{forloop.counter}}">
                                     <td>
                                         <div class="form-check custom-checkbox checkbox-primary check-lg mx-3">
-                                            <input name="{{customer.id}}" type="checkbox" class="form-check-input" value="2">
+                                            <input name="{{courier.id}}" type="checkbox" class="form-check-input" value="2">
                                             <label class="form-check-label" for="checkbox-2"></label>
                                         </div>
                                     </td>
                                     <td>
-                                        <a href="/customer-details/2/">
+                                        <a href="/courier-details/2/">
                                             <div class="d-flex text-align-center">
-                                                <div class="w-space-no">{{customer.fullname}}</div>
+                                                <div class="w-space-no">{{courier.fullname}}</div>
                                             </div>
                                         </a>
                                     </td>
-                                    <td><strong>{{customer.email}}</strong></td>
-                                    <td>{{customer.gender}}</td>
+                                    <td><strong>{{courier.email}}</strong></td>
+                                    <td>{{courier.gender}}</td>
                                     <td>
 
-                                        <span class="badge  badge-xs badge-primary light">Admin</span>
+                                        <span class="badge  badge-xs badge-primary light">Courier</span>
 
                                     </td>
-                                    <td>{{customer.phone}}</td>
+                                    <td>{{courier.phone}}</td>
                                     <td>
                                         <div class="d-flex text-align-center">
                                             <i class="fa fa-circle text-success mx-1"></i>
@@ -85,13 +85,13 @@
                                     <td>
                                         <div class="sweetalert">
                                             <div class="d-flex">
-                                                <!-- <a href="/assign-permissions-to-customer/2/"
+                                                <!-- <a href="/assign-permissions-to-courier/2/"
                                                     class="btn btn-success shadow btn-xs sharp mx-1"><i
                                                         class="fa fa-shield"></i></a> -->
-                                                <a href="/edit-customer/2/"
+                                                <a href="/edit-courier/2/"
                                                     class="btn btn-primary shadow btn-xs sharp mx-1"><i
                                                         class="fa fa-pencil"></i></a>
-                                                <a href="/delete-customer/2/"
+                                                <a href="{% url 'dashboard:create_update_user' %}?user_id={{courier.id}}"
                                                     class="btn btn-danger shadow btn-xs sharp sweet-success-cancel"><i
                                                         class="fa fa-trash"></i></a>
                                             </div>
