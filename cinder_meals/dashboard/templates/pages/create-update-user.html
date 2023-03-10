@@ -46,8 +46,8 @@
                                         <div class="mb-3 col-md-6">
                                             <label class="form-label">First Name <span class="text-danger">*</span>
                                             </label>
-                                            <input type="text" name="first_name" placeholder="First Name" value="{{first_name}}"
-                                                class="form-control" required id="id_first_name">
+                                            <input type="text" name="first_name" placeholder="First Name"
+                                                value="{{first_name}}" class="form-control" required id="id_first_name">
                                             <div class="text-danger w-100 d-block mt-1">
 
                                             </div>
@@ -55,32 +55,33 @@
                                         <div class="mb-3 col-md-6">
                                             <label class="form-label">Last Name <span class="text-danger">*</span>
                                             </label>
-                                            <input type="text" name="last_name" placeholder="Last Name" value="{{last_name}}"
-                                                class="form-control" required id="id_last_name">
+                                            <input type="text" name="last_name" placeholder="Last Name"
+                                                value="{{last_name}}" class="form-control" required id="id_last_name">
                                             <div class="text-danger w-100 d-block mt-1">
 
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="mb-3 col-md-6">
-                                        <label class="form-label">Email <span class="text-danger">*</span> </label>
-                                        <input type="email" name="email" maxlength="254" placeholder="Email" value="{{email}}"
-                                            class="form-control" required id="id_email">
-                                        <div class="text-danger w-100 d-block mt-1">
+                                    <div class="row col-md-12">
+                                        <div class="mb-3 col-md-6">
+                                            <label class="form-label">Email <span class="text-danger">*</span> </label>
+                                            <input type="email" name="email" maxlength="254" placeholder="Email"
+                                                value="{{email}}" class="form-control" required id="id_email">
+                                            <div class="text-danger w-100 d-block mt-1">
 
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label class="form-label">Phone Number <span class="text-danger">*</span>
+                                            </label>
+                                            <input type="text" name="phone_number" placeholder="Phone Number"
+                                                value="{{phone_number}}" class="form-control" required
+                                                id="id_phone_number">
+                                            <div class="text-danger w-100 d-block mt-1">
+
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="mb-3 col-md-6">
-                                        <label class="form-label">Phone Number <span class="text-danger">*</span>
-                                        </label>
-                                        <input type="text" name="phone_number" placeholder="Phone Number" value="{{phone_number}}"
-                                            class="form-control" required id="id_phone_number">
-                                        <div class="text-danger w-100 d-block mt-1">
-
-                                        </div>
-                                    </div>
-
-
                                     <div class="row col-md-12">
                                         <div class="mb-3 col-md-4 custom-user">
                                             <label class="form-label">Role </label>
@@ -97,7 +98,7 @@
 
                                             </div>
                                         </div>
-                                        <div class="mb-3 col-md-3 custom-user">
+                                        <div class="mb-3 col-md-4 custom-user">
                                             <label class="form-label">Gender <span class="text-danger">*</span></label>
                                             <select name="gender" class="form-control from-height-1 default-select wide"
                                                 required id="id_gender">
@@ -112,11 +113,12 @@
 
                                             </div>
                                         </div>
-                                        <div class="mb-3 col-md-3 custom-date-picker">
+                                        <div class="mb-3 col-md-4 custom-date-picker">
                                             <label class="form-label">Date of Birth <span
                                                     class="text-danger">*</span></label>
 
-                                            <input type="date" name="dob" value="{{dob}}" class="form-control" required id="id_dob">
+                                            <input type="date" name="dob" value="{{dob}}" class="form-control" required
+                                                id="id_dob">
                                             <div class="text-danger w-100 d-block mt-1">
 
                                             </div>
@@ -137,16 +139,17 @@
                                         <label class="form-label">Confirm Password <span
                                                 class="text-danger">*</span></label>
                                         <div class="input-group transparent-append">
-                                            <input type="password" name="confirm" id="dz-con-password" value="{{confirm}}"
-                                                placeholder="Confirm Password" class="form-control" required>
+                                            <input type="password" name="confirm" id="dz-con-password"
+                                                value="{{confirm}}" placeholder="Confirm Password" class="form-control"
+                                                required>
                                             <div class="text-danger w-100 d-block mt-1">
 
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-secondary mt-4 mb-5 ">Save</button>
-                                <a href="/" class="btn btn-primary mt-4 mb-5">Cancel</a>
+                                <button type="submit" class="btn btn-primary mt-4 mb-5">Save</button>
+                                <!-- <a href="/" class="btn btn-primary mt-4 mb-5">Cancel</a> -->
                             </form>
                         </div>
                     </div>
