@@ -1,0 +1,151 @@
+{% extends "base/base.html" %}
+{% block page_title %}Delivery Locations{% endblock page_title %}
+{% block content %}
+<div class="content-body">
+    <!-- row -->
+    <div class="container-fluid">
+        <div class="form-head d-flex mb-3 align-items-start">
+            <div class="mr-auto d-none d-lg-block">
+                <h2 class="text-black font-w600 mb-0">Delivery Locations</h2>
+                <p class="mb-0">Here is a list of available delivery Locations</p>
+            </div>
+             <!-- Add button-->
+             <div class=" ">
+                <button type="button" class="btn btn-primary light d-flex align-items-center svg-btn" data-toggle="modal" data-target="#exampleModalLong" aria-expanded="false">
+                    <svg width="16" class="scale5" height="16" viewBox="0 0 22 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.16647 27.9558C9.25682 27.9856 9.34946 28.0001 9.44106 28.0001C9.71269 28.0001 9.97541 27.8732 10.1437 27.6467L21.5954 12.2248C21.7926 11.9594 21.8232 11.6055 21.6746 11.31C21.526 11.0146 21.2236 10.8282 20.893 10.8282H13.1053V0.874999C13.1053 0.495358 12.8606 0.15903 12.4993 0.042327C12.1381 -0.0743215 11.7428 0.0551786 11.5207 0.363124L0.397278 15.7849C0.205106 16.0514 0.178364 16.403 0.327989 16.6954C0.477614 16.9878 0.77845 17.1718 1.10696 17.1718H8.56622V27.125C8.56622 27.5024 8.80816 27.8373 9.16647 27.9558ZM2.81693 15.4218L11.3553 3.58389V11.7032C11.3553 12.1865 11.7471 12.5782 12.2303 12.5782H19.1533L10.3162 24.479V16.2968C10.3162 15.8136 9.92444 15.4218 9.44122 15.4218H2.81693Z" fill="#ed7014"/></svg>
+                    <span class="fs-16 ml-3">Add</span>
+                    <i class=""></i>
+                </button>
+               
+            </div>
+
+            <div class="dropdown custom-dropdown">
+                <button type="button" class="btn btn-primary light d-flex align-items-center svg-btn" data-toggle="dropdown" aria-expanded="false">
+                    <svg width="16" class="scale5" height="16" viewBox="0 0 22 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.16647 27.9558C9.25682 27.9856 9.34946 28.0001 9.44106 28.0001C9.71269 28.0001 9.97541 27.8732 10.1437 27.6467L21.5954 12.2248C21.7926 11.9594 21.8232 11.6055 21.6746 11.31C21.526 11.0146 21.2236 10.8282 20.893 10.8282H13.1053V0.874999C13.1053 0.495358 12.8606 0.15903 12.4993 0.042327C12.1381 -0.0743215 11.7428 0.0551786 11.5207 0.363124L0.397278 15.7849C0.205106 16.0514 0.178364 16.403 0.327989 16.6954C0.477614 16.9878 0.77845 17.1718 1.10696 17.1718H8.56622V27.125C8.56622 27.5024 8.80816 27.8373 9.16647 27.9558ZM2.81693 15.4218L11.3553 3.58389V11.7032C11.3553 12.1865 11.7471 12.5782 12.2303 12.5782H19.1533L10.3162 24.479V16.2968C10.3162 15.8136 9.92444 15.4218 9.44122 15.4218H2.81693Z" fill="#ed7014"/></svg>
+                    <span class="fs-16 ml-3">Filter</span>
+                    <i class="fa fa-angle-down scale5 ml-3"></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="#">2020</a>
+                    <a class="dropdown-item" href="#">2019</a>
+                    <a class="dropdown-item" href="#">2018</a>
+                    <a class="dropdown-item" href="#">2017</a>
+                    <a class="dropdown-item" href="#">2016</a>
+                </div>
+            </div>
+  
+
+
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="table-responsive">
+                    <table id="example5" class="display mb-4 dataTablesCard" style="min-width: 845px;">
+                        <thead>
+                            <tr>
+                                <th>Location ID</th>
+                                <th> Name </th>
+                                <th> Charge</th>
+                                <th></th>
+                          
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for detail in delivery_details %}
+                            <tr>
+                                <td>#{{ forloop.counter }}</td>
+                                <td>{{ detail.name }}</td>
+                           
+                                <td><span class="btn btn-sm light btn-primary  fs-16">GHC {{ detail.delivery_fee }}</span></td>
+                                
+                                    <td><span class="btn btn-sm light btn-secondary fs-16">
+                                        <div class="dropdown ml-auto text-right">
+                                            <div class="btn-link" data-toggle="dropdown">
+                                                <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+                                            </div>
+                                            <div class="dropdown-menu dropdown-menu-center">
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item" href="#">Delete
+                                                    
+                                                </a>
+                                            </div>
+                                            
+                                        </div>
+                                    </span></td>
+                               											
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+   
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Add Delivery Location</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form method="POST" action="{% url 'dashboard:delivery-locations' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Location Name</label>
+                    <input type="text" class="form-control" name ="name" id="exampleInputEmail1" aria-describedby="emailHelp"  placeholder="Enter Location Name">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Location Charge</label>
+                    <input type="number" class="form-control"  name ='delivery_fee' id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Location Charge">
+                  </div>
+           
+              
+ 
+              <!-- <div class="submit-box">
+                <input type="submit" value="SUBMIT" id="send-btn" />
+              </div> -->
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button  type="submit" type="button" class="btn btn-primary">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}
+{% block scripts %}
+    <script src="/static/vendor/datatables/js/jquery.dataTables.min.js"></script>
+	
+	<script>
+	(function($) {
+	 
+		var table = $('#example5').DataTable({
+			searching: false,
+			paging:true,
+			select: false,
+			//info: false,         
+			lengthChange:false 
+			
+		});
+		$('#example tbody').on('click', 'tr', function () {
+			var data = table.row( this ).data();
+			
+		});
+	   
+	})(jQuery);
+	</script>
+{% endblock %}
