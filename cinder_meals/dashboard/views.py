@@ -6,7 +6,8 @@ from accounts.models import User
 from cinder_meals.utils.constants import OrderStatus
 from django.utils.decorators import method_decorator
 from cinder_meals.utils.decorators import AdminAndCourierOnly
-from dashboard.models import Meal, Order
+from dashboard.models import Meal, Order, DeliveryLocation
+from dashboard.forms import DeliveryLocationForm
 
 class DashboardView(View):
     @method_decorator(AdminAndCourierOnly)
@@ -171,3 +172,24 @@ class UsersView(View):
             "users":users,
         }
         return render(request, 'pages/users.html', context)
+
+
+class DeliveryLocationView(View):
+    template_name = 'pages/delivery-location.html'
+  
+    def get(self, request, *args, **kwargs):
+        delivery_details = DeliveryLocation.objects.all()
+        context = {
+            'delivery_details': delivery_details
+        }
+        return render(request, self.template_name, context)
+
+    def post(self,request, *args, **kwargs):
+        form = DeliveryLocationForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect('dashboard:delivery-locations')
+
+        print(form.errors) 
+        return redirect('dashboard:delivery-locations')
