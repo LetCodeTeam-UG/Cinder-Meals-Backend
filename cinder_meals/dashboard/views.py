@@ -144,6 +144,29 @@ class MealListView(View):
             'meals' : meals,
         }
         return render(request, 'pages/meals.html',context)
+    
+    
+
+
+class AddMealView(View):
+    template_name = 'pages/add-meal.html'
+
+    @method_decorator(AdminAndCourierOnly)
+    def get(self, request, *args, **kwargs):
+        context = {}
+        return render(request, 'pages/add-meal.html',context)
+    
+    def post(self, request, *args, **kwargs):
+        form = MealForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect('dashboard:add-meal')
+        
+        print(form.errors)
+        return redirect ('dashboard:add-meal')
+
+
 
 class CustomersView(View):
     @method_decorator(AdminAndCourierOnly)

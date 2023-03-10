@@ -32,3 +32,4 @@ sqlparse==0.4.3
 tzdata==2022.7
 urllib3==1.26.14
 validators==0.20.0
+django-adminlte-3== 0.1.6
