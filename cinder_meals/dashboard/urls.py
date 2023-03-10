@@ -18,4 +18,5 @@ urlpatterns = [
     path('couriers/', views.CouriersView.as_view(), name='couriers'),
     path('users/', views.UsersView.as_view(), name='users'),
     path('create_update_user/', views.CreateUpdateUserView.as_view(), name= 'create_update_user'),
+    path('profile/',views.UserProfileView.as_view(), name='profile'),
 ]

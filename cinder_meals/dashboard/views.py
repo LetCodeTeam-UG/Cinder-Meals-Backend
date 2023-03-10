@@ -98,7 +98,10 @@ class CreateUpdateUserView(View):
             return render(request, self.template_name, context)
         
 
-        
+class UserProfileView(View):
+    @method_decorator(AdminAndCourierOnly)
+    def get(self, request):
+        return render(request, 'pages/profile.html')
                     
         
 
