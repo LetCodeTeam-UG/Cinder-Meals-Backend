@@ -193,3 +193,24 @@ class DeliveryLocationView(View):
 
         print(form.errors) 
         return redirect('dashboard:delivery-locations')
+    
+    
+class MealsView(View):
+    template_name = 'pages/meals.html'
+  
+    def get(self, request, *args, **kwargs):
+        meals = Meal.objects.all()
+        context = {
+            'meals': meals
+        }
+        return render(request, self.template_name, context)
+
+    def post(self,request, *args, **kwargs):
+        form = DeliveryLocationForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect('dashboard:delivery-locations')
+
+        print(form.errors) 
+        return redirect('dashboard:delivery-locations')
