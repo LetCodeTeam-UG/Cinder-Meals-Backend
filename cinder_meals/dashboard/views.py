@@ -175,7 +175,7 @@ class UsersView(View):
 
 
 class DeliveryLocationView(View):
-    template_name = 'pages/delivery-location.html'
+    template_name = 'pages/delivery-locations.html'
   
     def get(self, request, *args, **kwargs):
         delivery_details = DeliveryLocation.objects.all()
