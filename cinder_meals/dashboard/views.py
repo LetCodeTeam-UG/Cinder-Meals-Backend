@@ -201,26 +201,46 @@ class UsersView(View):
 
 
 class DeliveryLocationView(View):
-    template_name = 'pages/delivery-locations.html'
+    template_name = 'pages/delivery_locations.html'
 
     @method_decorator(AdminAndCourierOnly)
     def get(self, request, *args, **kwargs):
+        delivery_id = request.GET.get('delivery_id')
+        if delivery_id:
+            delivery = DeliveryLocation.objects.filter(id=delivery_id).first()
+            if delivery:
+                delivery.delete()
+                messages.success(request, 'Delivery location deleted successfully')
+                return redirect('dashboard:delivery_locations')
+            else:
+                messages.error(request, 'Delivery location does not exist')
+                return redirect('dashboard:delivery_locations')
         delivery_details = DeliveryLocation.objects.all()
         context = {
             'delivery_details': delivery_details
         }
         return render(request, self.template_name, context)
     
-    @method_decorator(AdminAndCourierOnly)
     def post(self,request, *args, **kwargs):
+        location_id = request.POST.get('location_id')
+        if location_id:
+            location = DeliveryLocation.objects.filter(id=location_id).first()
+            if location:
+                location.name = request.POST.get('name')
+                location.delivery_fee = request.POST.get('delivery_fee')
+                location.save()
+                messages.success(request, 'Delivery location updated successfully')
+                return redirect('dashboard:delivery_locations')
+            else:
+                messages.error(request, 'Delivery location does not exist')
+                return redirect('dashboard:delivery_locations')
         form = DeliveryLocationForm(request.POST)
-
         if form.is_valid():
             form.save()
-            return redirect('dashboard:delivery-locations')
+            messages.success(request, 'Delivery location added successfully')
+            return redirect('dashboard:delivery_locations')
 
-        print(form.errors) 
-        return redirect('dashboard:delivery-locations')
+        return redirect('dashboard:delivery_locations')
     
     
 # class MealsView(View):
@@ -238,7 +258,7 @@ class DeliveryLocationView(View):
 
 #         if form.is_valid():
 #             form.save()
-#             return redirect('dashboard:delivery-locations')
+#             return redirect('dashboard:delivery_locations')
 
 #         print(form.errors) 
-#         return redirect('dashboard:delivery-locations')
+#         return redirect('dashboard:delivery_locations')
