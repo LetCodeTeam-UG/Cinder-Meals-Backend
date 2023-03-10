@@ -10,11 +10,16 @@
                     <p class="mb-0">All available dishes </p>
                 </div>
             </div>
-            <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="javascript:void(0)">Layout</a></li>
-                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Blank</a></li>
-                </ol>
+
+   
+            <div class=" ">
+                <button type="button" class="btn btn-primary light d-flex align-items-center svg-btn" data-toggle="modal" data-target="#exampleModalLong" aria-expanded="false">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="13" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                      </svg>                    
+                      <span class="fs-16 ml-3">Add Mel</span>
+                </button>
+               
             </div>
         </div>
         <div class="row">
@@ -49,7 +54,79 @@
 
     </div>
 </div>
+
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+   
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Add Meal </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form method="POST" action="{% url 'dashboard:meals' %}">
+              {% csrf_token %}
+
+              <div class="form-group">
+                <b><label for="text">Title </label></b>  
+                  <input type="text" class="form-control" name ="title" id="exampleInputEmail1" aria-describedby="emailHelp"  placeholder=" ">
+                </div>
+
+                <div class="form-group dropdown">
+                  <b>  <label for="text">Meal type </label> </b>
+                  <select class="form-select" aria-label="Default select example">
+                    <option selected>Open this select menu</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </select>
+                  </div>
+
+                  <div class="form-group">
+                  <b>  <label for="text">Description </label> </b>
+                    <input type="textarea" class="form-control" name ="description" id="exampleInputEmail1" aria-describedby="emailHelp"  placeholder="Describe meal...">
+                  </div>
+
+                  
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Price</label>
+                  <input type="number" class="form-control"  name ='price' id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="10.00 ">
+                </div>
+
+                <input type="file" name="image" onchange="previewImage(event)">
+                <img id="preview" src="#" alt="Image Preview" style="display: none; width: 300px; height: auto; margin-top: 10px; margin-left: 15px;">
+                
+         
+            
+
+          
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button  type="submit" type="button" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
 {% block scripts %}
+
+
+<script>
+    function previewImage(event) {
+      var preview = document.getElementById('preview');
+      preview.style.display = "block";
+      preview.src = URL.createObjectURL(event.target.files[0]);
+    }
+    </script>
 <script src="/static/vendor/highlightjs/highlight.pack.min.js"></script>
 {% endblock %}
