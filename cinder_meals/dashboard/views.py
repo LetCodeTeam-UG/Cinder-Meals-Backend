@@ -36,10 +36,11 @@ class CreateUpdateUserView(View):
     template_name = 'pages/create-update-user.html'
     @method_decorator(AdminAndCourierOnly)
     def get(self, request):
-        user_id = request.GET.get('user_id')
-        if user_id:
+        delete_user_id = request.GET.get('delete_user_id')
+        edit_user_id = request.GET.get('edit_user_id')
+        if delete_user_id:
             try:
-                user = User.objects.get(id=user_id)
+                user = User.objects.get(id=delete_user_id)
                 user.delete()
                 messages.success(request, 'User deleted successfully')
                 return redirect(request.META.get('HTTP_REFERER'))
@@ -47,13 +48,28 @@ class CreateUpdateUserView(View):
                 for error in e.args:
                     messages.error(request, error)
                 return redirect(request.META.get('HTTP_REFERER'))
-        else:
-            return render(request, self.template_name)
+        if edit_user_id:
+            user = User.objects.get(id=edit_user_id)
+            email = user.email
+            context = {
+                'user' : user,
+                'email' : email,
+            }
+            return render(request, self.template_name, context)
+        
+        return render(request, self.template_name)
+        
+        
     
     def post(self, request):
+        user_id = request.POST.get('user_id')
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
-        fullname = first_name + ' ' + last_name
+        if first_name == None or last_name == None:
+            messages.error(request, 'First name and last name are required')
+            return render(request, self.template_name)
+        else:
+            fullname = first_name + ' ' + last_name
         email = request.POST.get('email')
         phone = request.POST.get('phone_number')
         role = request.POST.get('group')
@@ -63,6 +79,16 @@ class CreateUpdateUserView(View):
         confirm = request.POST.get('confirm')
         is_active = request.POST.get('is_active')
         context = {k : v for k, v in request.POST.items()}
+        print('context')
+        if user_id:
+            user = User.objects.get(id=user_id).first()
+            if user:
+                user.fullname = fullname
+                user.email = email
+                user.phone = phone
+                user.gender = gender
+                user.dob = dob
+            
         try: 
             user = User.objects.filter(email=email).first()
             if user:

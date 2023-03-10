@@ -21,7 +21,8 @@
                     <div class="d-flex mb-2">
                         <button type="submit" id="delete_multiple_btn"
                             class="btn light btn-outline-primary btn-sm mx-2 ">Delete</button>
-                        <a href="{% url 'dashboard:create_update_user' %}" class="btn btn-primary btn-sm ">ADD USER <span class="btn-icon-end">
+                        <a href="{% url 'dashboard:create_update_user' %}" class="btn btn-primary btn-sm ">ADD USER
+                            <span class="btn-icon-end">
                                 <i class="fa fa-plus"></i></span>
                         </a>
                     </div>
@@ -54,7 +55,8 @@
                                 <tr id="{{forloop.counter}}">
                                     <td>
                                         <div class="form-check custom-checkbox checkbox-primary check-lg mx-3">
-                                            <input name="{{user.id}}" type="checkbox" class="form-check-input" value="2">
+                                            <input name="{{user.id}}" type="checkbox" class="form-check-input"
+                                                value="2">
                                             <label class="form-check-label" for="checkbox-2"></label>
                                         </div>
                                     </td>
@@ -71,11 +73,11 @@
 
                                         <span class="badge  badge-xs badge-primary light">
                                             {% if user.is_admin %}
-                                              Admin
-                                              {% elif user.is_customer %}
-                                              Customer
-                                              {% elif user.is_courier %}
-                                                Courier
+                                            Admin
+                                            {% elif user.is_customer %}
+                                            Customer
+                                            {% elif user.is_courier %}
+                                            Courier
                                             {% endif %}
                                         </span>
 
@@ -92,10 +94,10 @@
                                                 <!-- <a href="/assign-permissions-to-user/2/"
                                                     class="btn btn-success shadow btn-xs sharp mx-1"><i
                                                         class="fa fa-shield"></i></a> -->
-                                                <a href="/edit-user/2/"
+                                                <a href="{% url 'dashboard:create_update_user' %}?edit_user_id={{user.id}}"
                                                     class="btn btn-primary shadow btn-xs sharp mx-1"><i
                                                         class="fa fa-pencil"></i></a>
-                                                <a href="{% url 'dashboard:create_update_user' %}?user_id={{user.id}}"
+                                                <a href="{% url 'dashboard:create_update_user' %}?delete_user_id={{user.id}}"
                                                     class="btn btn-danger shadow btn-xs sharp sweet-success-cancel"><i
                                                         class="fa fa-trash"></i></a>
                                             </div>
