@@ -14,6 +14,7 @@ urlpatterns = [
     path('cancelled_orders/', views.CancelledOrderListView.as_view(), name='cancelled_orders'),
     path('meal/', views.MealView.as_view(), name='meal'),
     path('meals/', views.MealListView.as_view(), name='meals'),
+    path('add-meal/', views.AddMealView.as_view(), name='add-meal'),
     path('customers/', views.CustomersView.as_view(), name='customers'),
     path('couriers/', views.CouriersView.as_view(), name='couriers'),
     path('users/', views.UsersView.as_view(), name='users'),

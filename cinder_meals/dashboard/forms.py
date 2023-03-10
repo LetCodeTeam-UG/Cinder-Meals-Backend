@@ -12,4 +12,4 @@ class DeliveryLocationForm(forms.ModelForm):
 class MealForm(forms.ModelForm):
     class Meta:
         model = Meal
-        exclude = ['id']
+        exclude = ['id','orders_count']

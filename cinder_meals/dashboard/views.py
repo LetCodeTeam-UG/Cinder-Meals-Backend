@@ -7,7 +7,7 @@ from cinder_meals.utils.constants import OrderStatus
 from django.utils.decorators import method_decorator
 from cinder_meals.utils.decorators import AdminAndCourierOnly
 from dashboard.models import Meal, Order, DeliveryLocation
-from dashboard.forms import DeliveryLocationForm
+from dashboard.forms import DeliveryLocationForm, MealForm
 
 class DashboardView(View):
     @method_decorator(AdminAndCourierOnly)
@@ -139,12 +139,35 @@ class MealView(View):
     
 class MealListView(View):
     @method_decorator(AdminAndCourierOnly)
-    def get(self, request):
+    def get(self, request, *args, **kwargs):
         meals = Meal.objects.filter(published = True).order_by('-id')
         context = {
             'meals' : meals,
         }
         return render(request, 'pages/meals.html',context)
+    
+    
+
+
+class AddMealView(View):
+    template_name = 'pages/add-meal.html'
+
+    @method_decorator(AdminAndCourierOnly)
+    def get(self, request, *args, **kwargs):
+        context = {}
+        return render(request, 'pages/add-meal.html',context)
+    
+    def post(self, request, *args, **kwargs):
+        form = MealForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect('dashboard:add-meal')
+        
+        print(form.errors)
+        return redirect ('dashboard:add-meal')
+
+
 
 class CustomersView(View):
     @method_decorator(AdminAndCourierOnly)
@@ -176,14 +199,16 @@ class UsersView(View):
 
 class DeliveryLocationView(View):
     template_name = 'pages/delivery-locations.html'
-  
+
+    @method_decorator(AdminAndCourierOnly)
     def get(self, request, *args, **kwargs):
         delivery_details = DeliveryLocation.objects.all()
         context = {
             'delivery_details': delivery_details
         }
         return render(request, self.template_name, context)
-
+    
+    @method_decorator(AdminAndCourierOnly)
     def post(self,request, *args, **kwargs):
         form = DeliveryLocationForm(request.POST)
 
@@ -195,22 +220,22 @@ class DeliveryLocationView(View):
         return redirect('dashboard:delivery-locations')
     
     
-class MealsView(View):
-    template_name = 'pages/meals.html'
+# class MealsView(View):
+#     template_name = 'pages/meals.html'
   
-    def get(self, request, *args, **kwargs):
-        meals = Meal.objects.all()
-        context = {
-            'meals': meals
-        }
-        return render(request, self.template_name, context)
+#     def get(self, request, *args, **kwargs):
+#         meals = Meal.objects.all()
+#         context = {
+#             'meals': meals
+#         }
+#         return render(request, self.template_name, context)
 
-    def post(self,request, *args, **kwargs):
-        form = DeliveryLocationForm(request.POST)
+#     def post(self,request, *args, **kwargs):
+#         form = DeliveryLocationForm(request.POST)
 
-        if form.is_valid():
-            form.save()
-            return redirect('dashboard:delivery-locations')
+#         if form.is_valid():
+#             form.save()
+#             return redirect('dashboard:delivery-locations')
 
-        print(form.errors) 
-        return redirect('dashboard:delivery-locations')
+#         print(form.errors) 
+#         return redirect('dashboard:delivery-locations')
