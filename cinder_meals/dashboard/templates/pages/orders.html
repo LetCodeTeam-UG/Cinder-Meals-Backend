@@ -7,7 +7,7 @@
         <div class="form-head d-flex mb-3 align-items-start">
             <div class="mr-auto d-none d-lg-block">
                 <h2 class="text-black font-w600 mb-0">Orders</h2>
-                <p class="mb-0">Here is your order list data</p>
+                <p class="mb-0">List of all orders</p>
             </div>
             <div class="dropdown custom-dropdown">
                 <button type="button" class="btn btn-primary light d-flex text-align-center svg-btn" data-toggle="dropdown" aria-expanded="false">
@@ -56,12 +56,13 @@
                             </tr>
                         </thead>
                         <tbody>
+                            {% for order in orders %}
                             <tr>
-                                <td>#5552351</td>
-                                <td>26 March 2020, 12:42 AM</td>
-                                <td>James WItcwicky</td>
-                                <td>Corner Street 5th London</td>
-                                <td>$164.52</td>
+                                <td>{{order.order_id}}</td>
+                                <td>{{order.created_at}}</td>
+                                <td>{{order.user.fullname}}</td>
+                                <td>{{order.location.name}}</td>
+                                <td>$ {{order.get_order_items_total}}</td>
                                 <td><span class="btn btn-sm light btn-warning fs-16">New Order</span></td>
                                 <td>
                                     <div class="dropdown ml-auto text-right">
@@ -75,6 +76,7 @@
                                     </div>
                                 </td>												
                             </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>

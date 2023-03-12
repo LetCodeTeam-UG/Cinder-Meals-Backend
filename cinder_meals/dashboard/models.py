@@ -86,14 +86,18 @@ class Order(models.Model):
     order_id =  models.CharField(max_length=20, default=get_id)
     user = models.ForeignKey('accounts.User', on_delete=models.CASCADE)
     order_items = models.ManyToManyField(OrderItem)
-    sub_total = models.DecimalField(max_digits=5, decimal_places=2,null=True)
-    total = models.DecimalField(max_digits=5, decimal_places=2)
+    sub_total = models.DecimalField(max_digits=5, decimal_places=2,null=True, blank=True)
+    total = models.DecimalField(max_digits=5, decimal_places=2,null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     phone = models.CharField(max_length=20)
     location = models.ForeignKey('DeliveryLocation', on_delete=models.SET_NULL, null=True)
     payment_method = models.CharField(max_length=15, default=PaymentMethod.MOBILE_MONEY.value)
     approved = models.BooleanField(default=False)
     status = models.CharField(max_length=10, default=OrderStatus.PENDING.value) 
+    
+    def set_total(self):
+        self.total = self.get_order_items_total()
+        self.save()
     
     def get_order_items(self):
         order_items = []
@@ -115,6 +119,20 @@ class Order(models.Model):
     
     def __str__(self):
         return self.order_id
+    
+    # def save(self, *args, **kwargs):
+    #         super().save(*args, **kwargs)
+
+    #         # Calculate the sub total and total
+    #         self.sub_total = sum(item.meal.price for item in self.order_items.all())
+    #         print(self.sub_total)
+    #         if self.location:
+    #             self.total = self.sub_total + self.location.delivery_fee
+    #         else:
+    #             self.total = self.sub_total
+
+    #         # Save the order items
+    #         self.order_items.set(list(self.order_items.all()))
 
 class Delivery(models.Model):
     name = models.CharField(max_length=50)

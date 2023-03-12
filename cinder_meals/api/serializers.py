@@ -45,32 +45,22 @@ class MealSerializer(serializers.ModelSerializer):
         fields = ('id', 'title', 'type', 'description', 'price', 'image','created_at','updated_at')
 
 class OrderSerializer(serializers.ModelSerializer):
-    payment_status = serializers.SerializerMethodField("get_payment_status")
-    
-    def get_payment_status(self, order):
-        if order.payment:
-            return order.payment.status
-        else:
-            status = "Pay on delivery"
-            return status
-        
-           
     class Meta:
         model = Order
-        fields = ('order_id', 'user', 'order_items', 'total', 'created_at', 'phone', 'location', 'payment_method', 'status')
+        fields = ('user', 'order_items', 'total', 'created_at', 'phone', 'location', 'payment_method', 'status')
         
 class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderItem
-        fields = ('id', 'user', 'meal', 'allergies', 'additional_info')
+        fields = ('user', 'meal', 'allergies', 'additional_info')
         
 class PaymentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Payment
-        fields = ('id', 'order', 'status', 'amount', 'transaction_id', 'payment_method')
+        fields = ('order', 'status', 'amount', 'transaction_id', 'payment_method')
 
 class DeliverySerializer(serializers.ModelSerializer):
     class Meta:
         model = Delivery
-        fields = ('id', 'order', 'status', 'delivery_date', 'delivery_time', 'delivery_address', 'delivery_phone', 'delivery_note')
+        fields = ('order', 'status', 'delivery_date', 'delivery_time', 'delivery_address', 'delivery_phone', 'delivery_note')
 

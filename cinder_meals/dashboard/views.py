@@ -145,7 +145,11 @@ class OrderView(View):
 class OrderListView(View):
     @method_decorator(AdminAndCourierOnly)
     def get(self, request):
-        return render(request, 'pages/orders.html')
+        orders = Order.objects.all().order_by('-created_at')
+        context = {
+            'orders' : orders,
+        }
+        return render(request, 'pages/orders.html', context)
     
 class PendingOrderListView(View):
     @method_decorator(AdminAndCourierOnly)
