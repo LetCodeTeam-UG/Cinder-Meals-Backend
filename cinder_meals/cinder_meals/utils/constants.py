@@ -10,7 +10,7 @@ class MealType(Enum):
 class OrderStatus(Enum):
     PENDING = 'Pending'
     APPROVED = 'Approved'
-    SUCCESS = 'Success'
+    PROCESSING = 'Processing'
     CANCELLED = 'Cancelled'
     ON_THE_WAY = 'On the Way'
     COMPLETED = 'Completed'

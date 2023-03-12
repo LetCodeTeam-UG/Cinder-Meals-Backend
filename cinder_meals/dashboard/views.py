@@ -154,16 +154,30 @@ class OrderListView(View):
 class PendingOrderListView(View):
     @method_decorator(AdminAndCourierOnly)
     def get(self, request):
-        return render(request, 'pages/pending_orders.html')
+        pending_orders = Order.objects.filter(status=OrderStatus.PENDING.value).order_by('-created_at')
+        print(pending_orders)
+        context = {
+            'pending_orders' : pending_orders,
+        }
+        return render(request, 'pages/pending_orders.html', context)
     
 class CompletedOrderListView(View):
     @method_decorator(AdminAndCourierOnly)
     def get(self, request):
-        return render(request, 'pages/completed_orders.html')
+        completed_orders = Order.objects.filter(status=OrderStatus.COMPLETED.value).order_by('-created_at')
+        context = {
+            'completed_orders' : completed_orders,
+        }
+        return render(request, 'pages/completed_orders.html', context)
+    
 class CancelledOrderListView(View):
     @method_decorator(AdminAndCourierOnly)
     def get(self, request):
-        return render(request, 'pages/cancelled_orders.html')
+        cancelled_orders = Order.objects.filter(status=OrderStatus.CANCELLED.value).order_by('-created_at')
+        context = {
+            'cancelled_orders' : cancelled_orders,
+        }
+        return render(request, 'pages/cancelled_orders.html', context)
 
 class MealView(View):
     @method_decorator(AdminAndCourierOnly)
