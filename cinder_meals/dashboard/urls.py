@@ -21,4 +21,6 @@ urlpatterns = [
     path('delivery_locations/', views.DeliveryLocationView.as_view(), name='delivery_locations'),
     path('create_update_user/', views.CreateUpdateUserView.as_view(), name= 'create_update_user'),
     path('profile/',views.UserProfileView.as_view(), name='profile'),
+    path('profile/update/',views.UpdateProfileView.as_view(), name='update_profile'),
+    path('profile/change_password/',views.ChangePasswordView.as_view(), name='change_password'),
 ]

@@ -381,23 +381,52 @@ class DeliveryLocationView(View):
 
         return redirect('dashboard:delivery_locations')
     
+class ChangePasswordView(View):
+    @method_decorator(AdminAndCourierOnly)
+    def get(self, request):
+        return render(request, 'pages/profile.html')
     
-# class MealsView(View):
-#     template_name = 'pages/meals.html'
-  
-#     def get(self, request, *args, **kwargs):
-#         meals = Meal.objects.all()
-#         context = {
-#             'meals': meals
-#         }
-#         return render(request, self.template_name, context)
+    def post(self, request):
+        old_password = request.POST.get('old_password')
+        new_password = request.POST.get('new_password')
+        confirm_password = request.POST.get('confirm_password')
+        if new_password != confirm_password:
+            messages.error(request, 'New password and confirm password do not match')
+            return redirect('dashboard:profile')
+        user = User.objects.filter(id=request.user.id).first()
+        if user:
+            if user.check_password(old_password):
+                user.set_password(new_password)
+                user.save()
+                messages.success(request, 'Password changed successfully')
+                return redirect('dashboard:profile')
+            else:
+                messages.error(request, 'Old password is incorrect')
+                return redirect('dashboard:profile')
+        else:
+            messages.error(request, 'User does not exist')
+            return redirect('dashboard:profile')
 
-#     def post(self,request, *args, **kwargs):
-#         form = DeliveryLocationForm(request.POST)
-
-#         if form.is_valid():
-#             form.save()
-#             return redirect('dashboard:delivery_locations')
-
-#         print(form.errors) 
-#         return redirect('dashboard:delivery_locations')
+class UpdateProfileView(View):
+    @method_decorator(AdminAndCourierOnly)
+    def get(self, request):
+        return render(request, 'pages/profile.html')
+    
+    def post(self, request):
+        fullname = request.POST.get('fullname')
+        phone = request.POST.get('phone')
+        gender = request.POST.get('gender')
+        dob = request.POST.get('dob')
+        
+        user = User.objects.filter(id=request.user.id).first()
+        if user:
+            user.fullname = fullname
+            user.phone = phone
+            user.gender = gender
+            user.dob = dob
+            user.save()
+            messages.success(request, 'Profile updated successfully')
+            return redirect('dashboard:profile')
+        else:
+            messages.error(request, 'User does not exist')
+            return redirect('dashboard:profile')
