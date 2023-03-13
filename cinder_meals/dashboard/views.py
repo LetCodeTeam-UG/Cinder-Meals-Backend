@@ -174,6 +174,21 @@ class OrderListView(View):
             'orders' : orders,
         }
         return render(request, 'pages/orders.html', context)
+
+class OrderDetailView(View):
+    @method_decorator(AdminAndCourierOnly)
+    def get(self, request):
+        order_id = request.GET.get('order_id')
+        print(order_id)
+        order = Order.objects.filter(id=order_id).first()
+        if order:
+            context = {
+                'order' : order,
+            }
+            return render(request, 'pages/order-detail.html', context)
+        else:
+            messages.error(request, 'Order does not exist')
+            return redirect('dashboard:orders')
     
 class PendingOrderListView(View):
     @method_decorator(AdminAndCourierOnly)
