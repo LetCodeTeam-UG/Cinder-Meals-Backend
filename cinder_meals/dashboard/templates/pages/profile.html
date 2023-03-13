@@ -12,9 +12,9 @@
             </div>
         </div>
         <section class="section profile">
+            {% include "blocks/alert_messages.html" %}
             <div class="row">
                 <div class="col-xl-4">
-
                     <div class="card">
                         <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
                             <div class="card-body text-center">
@@ -180,12 +180,13 @@
                                         <div id="change-password" class="tab-pane fade">
                                             <div class="pt-3">
                                                 <div class="settings-form">
-                                                    <h4 class="text-primary">CHange Password</h4>
-                                                    <form action="" method="POST">
+                                                    <h4 class="text-primary">Change Password</h4>
+                                                    <form action="{% url 'dashboard:change_password' %}" method="post">
+                                                        {% csrf_token %}
                                                         <div class="form-group">
-                                                            <label>Current Password</label>
-                                                            <input type="password" placeholder="Current Password"
-                                                                name="current_password" class="form-control" required>
+                                                            <label>Old Password</label>
+                                                            <input type="password" placeholder="Old Password"
+                                                                name="old_password" class="form-control" required>
                                                         </div>
                                                         <div class="form-group">
                                                             <label>New Password</label>

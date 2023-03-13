@@ -42,16 +42,7 @@
         </div>
         <div class="row">
             <div class="col-12">
-                {% if messages %}
-                {% for message in messages %}
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <strong>{{ message }}</strong>
-                </div>
-                {% endfor %}
-                {% endif %}
+                {% include "blocks/alert_messages.html" %}
                 <div class="table-responsive">
                     <table id="example5" class="display mb-4 dataTablesCard" style="min-width: 845px;">
                         <thead>

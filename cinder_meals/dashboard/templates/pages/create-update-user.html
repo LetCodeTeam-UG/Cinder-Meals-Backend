@@ -14,16 +14,7 @@
                         <div class="basic-form">
                             <form action="{% url 'dashboard:create_update_user' %}" method="post"
                                 enctype="multipart/form-data" novalidate autocomplete="off">
-                                {% if messages %}
-                                {% for message in messages %}
-                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                    <strong>{{ message }}</strong>
-                                </div>
-                                {% endfor %}
-                                {% endif %}
+                                {% include "blocks/alert_messages.html" %}
                                 {% csrf_token %}
                                 <div class="row">
                                     <!-- fix upload profile later -->

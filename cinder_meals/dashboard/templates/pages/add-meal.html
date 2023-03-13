@@ -11,11 +11,10 @@
                 </div>
             </div>
 
-           
+            {% include "blocks/alert_messages.html" %}
             <!-- Form-->
             <form method="POST" action="{% url 'dashboard:add-meal' %}" >
                 {% csrf_token %}
-
                 <div class="form-group">
                     <b> <label for="exampleInputEmail1">Image</label> </b>
                     <img id="preview" name="image" src="#" alt="Image Preview" style="display: none; width: 300px; height: auto; margin-bottom: 15px; margin-left: 15px;">

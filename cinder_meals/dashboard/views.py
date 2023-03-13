@@ -152,7 +152,7 @@ class OrderListView(View):
             if order:
                 order.status = OrderStatus.APPROVED.value
                 order.save()
-                messages.success(request,f'Order {order.id} approved successfully')
+                messages.success(request,f'Order {order.order_id} approved successfully')
                 return redirect('dashboard:orders')
             else:
                 messages.error(request, "Order does not exist")
@@ -163,7 +163,7 @@ class OrderListView(View):
             if order:
                 order.status = OrderStatus.CANCELLED.value
                 order.save()
-                messages.success(request,f'Order {order.id} rejected successfully')
+                messages.success(request,f'Order {order.order_id} rejected successfully')
                 return redirect('dashboard:orders')
             else:
                 messages.error(request, "Order does not exist")
@@ -185,7 +185,7 @@ class PendingOrderListView(View):
             if order:
                 order.status = OrderStatus.APPROVED.value
                 order.save()
-                messages.success(request,f'Order {order.id} approved successfully')
+                messages.success(request,f'Order {order.order_id} approved successfully')
                 return redirect('dashboard:pending_orders')
             else:
                 messages.error(request, "Order does not exist")
@@ -196,7 +196,7 @@ class PendingOrderListView(View):
             if order:
                 order.status = OrderStatus.CANCELLED.value
                 order.save()
-                messages.success(request,f'Order {order.id} rejected successfully')
+                messages.success(request,f'Order {order.order_id} rejected successfully')
                 return redirect('dashboard:orders')
             else:
                 messages.error(request, "Order does not exist")
@@ -218,7 +218,7 @@ class CompletedOrderListView(View):
             if order:
                 order.status = OrderStatus.APPROVED.value
                 order.save()
-                messages.success(request,f'Order {order.id} approved successfully')
+                messages.success(request,f'Order {order.order_id} approved successfully')
                 return redirect('dashboard:completed_orders')
             else:
                 messages.error(request, "Order does not exist")
@@ -229,7 +229,7 @@ class CompletedOrderListView(View):
             if order:
                 order.status = OrderStatus.CANCELLED.value
                 order.save()
-                messages.success(request,f'Order {order.id} rejected successfully')
+                messages.success(request,f'Order {order.order_id} rejected successfully')
                 return redirect('dashboard:orders')
             else:
                 messages.error(request, "Order does not exist")
@@ -251,7 +251,7 @@ class CancelledOrderListView(View):
             if order:
                 order.status = OrderStatus.APPROVED.value
                 order.save()
-                messages.success(request,f'Order {order.id} approved successfully')
+                messages.success(request,f'Order {order.order_id} approved successfully')
                 return redirect('dashboard:cancelled_orders')
             else:
                 messages.error(request, "Order does not exist")
@@ -262,7 +262,7 @@ class CancelledOrderListView(View):
             if order:
                 order.status = OrderStatus.CANCELLED.value
                 order.save()
-                messages.success(request,f'Order {order.id} rejected successfully')
+                messages.success(request,f'Order {order.order_id} rejected successfully')
                 return redirect('dashboard:orders')
             else:
                 messages.error(request, "Order does not exist")
