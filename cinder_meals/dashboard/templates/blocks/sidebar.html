@@ -6,7 +6,7 @@
                     <span class="nav-text">Dashboard</span>
                 </a>
             </li>
-            <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+            <!-- <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
                     <i class="flaticon-381-television"></i>
                     <span class="nav-text">Orders</span>
                 </a>
@@ -16,6 +16,11 @@
                     <li><a href="{% url 'dashboard:completed_orders' %}">Completed</a></li>
                     <li><a href="{% url 'dashboard:cancelled_orders' %}">Canceled</a></li>
                 </ul>
+            </li> -->
+            <li><a href="{% url 'dashboard:orders' %}" class="ai-icon" aria-expanded="false">
+                    <i class="flaticon-381-settings-2"></i>
+                    <span class="nav-text">Orders</span>
+                </a>
             </li>
             <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
                     <i class="flaticon-381-television"></i>

@@ -11,17 +11,41 @@
                 </div>
             </div>
 
-   
+
 
         </div>
-        <div class="row">
+        <div class="">
             {% include "blocks/alert_messages.html" %}
+        </div>
+        <div class="row">
             {% for meal in meals %}
 
             <div class="col-xl-3 col-lg-6 col-md-4 col-sm-6">
-
                 <div class="card">
                     <div class="card-body">
+                        <div class="dropdown ml-auto text-right dropup">
+                            <div class="btn-link" data-toggle="dropdown">
+                                <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <rect x="0" y="0" width="24" height="24"></rect>
+                                        <circle fill="#000000" cx="5" cy="12" r="2"></circle>
+                                        <circle fill="#000000" cx="12" cy="12" r="2"></circle>
+                                        <circle fill="#000000" cx="19" cy="12" r="2"></circle>
+                                    </g>
+                                </svg>
+                            </div>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item"
+                                    href="{% url 'dashboard:order_detail' %}?order_id={{meal.id}}">View
+                                </a>
+                                <a class="dropdown-item"
+                                    href="{% url 'dashboard:add-meal' %}?edit_meal_id={{meal.id}}"> Edit
+                                </a>
+                                <a class="dropdown-item"
+                                    href="{% url 'dashboard:meals' %}?delete_meal_id={{meal.id}}"> Delete
+                                </a>
+                            </div>
+                        </div>
                         <div class="new-arrival-product">
                             <div class="new-arrivals-img-contnent">
                                 <img class="img-fluid" src="{{meal.image.url}}" alt="">
@@ -42,16 +66,16 @@
                 </div>
             </div>
 
+            {% endfor %}
         </div>
-        {% endfor %}
 
     </div>
 </div>
 
 
 
-    </div>
-  </div>
+</div>
+</div>
 </div>
 {% endblock %}
 {% block scripts %}

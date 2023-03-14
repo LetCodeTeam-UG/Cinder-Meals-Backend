@@ -1,10 +1,13 @@
 from enum import Enum
 
+currency = '₵ '
+
 class MealType(Enum):
+    ANY = 'Any'
     BREAKFAST = 'Break Fast'
     LUNCH = 'Lunch'
     DINNER = 'Dinner'
-    ANY = 'Any'
+    BEVERAGES = 'Beverages'
     
 
 class OrderStatus(Enum):

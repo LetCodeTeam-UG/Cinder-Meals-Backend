@@ -67,6 +67,7 @@ class OrderItem(models.Model):
     user = models.ForeignKey('accounts.User', on_delete=models.CASCADE)
     meal = models.ForeignKey(Meal, on_delete=models.CASCADE)
     quantity = models.IntegerField(default = 1)
+    total = models.DecimalField(max_digits=5, decimal_places=2,null=True, blank=True)
     allergies = models.CharField(max_length = 200, null = True, blank = True)
     additional_info = models.CharField(max_length = 200, null = True, blank = True)
 
@@ -89,8 +90,10 @@ class Order(models.Model):
     sub_total = models.DecimalField(max_digits=5, decimal_places=2,null=True, blank=True)
     total = models.DecimalField(max_digits=5, decimal_places=2,null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     phone = models.CharField(max_length=20)
     location = models.ForeignKey('DeliveryLocation', on_delete=models.SET_NULL, null=True)
+    order_note = models.CharField(max_length=200, null=True, blank=True)
     payment_method = models.CharField(max_length=15, default=PaymentMethod.MOBILE_MONEY.value)
     approved = models.BooleanField(default=False)
     status = models.CharField(max_length=10, default=OrderStatus.PENDING.value) 
@@ -138,7 +141,7 @@ class Delivery(models.Model):
     name = models.CharField(max_length=50)
     courier = models.CharField(max_length=50)
     order = models.ForeignKey('Order', on_delete=models.CASCADE)
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateField(auto_now_add=True)
     
     def __str__(self):
         return self.name

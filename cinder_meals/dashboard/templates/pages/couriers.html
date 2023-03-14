@@ -82,7 +82,7 @@
                                                 <!-- <a href="/assign-permissions-to-courier/2/"
                                                     class="btn btn-success shadow btn-xs sharp mx-1"><i
                                                         class="fa fa-shield"></i></a> -->
-                                                <a href="/edit-courier/2/"
+                                                <a href="{% url 'dashboard:create_update_user' %}?edit_user_id={{courier.id}}"
                                                     class="btn btn-primary shadow btn-xs sharp mx-1"><i
                                                         class="fa fa-pencil"></i></a>
                                                 <a href="{% url 'dashboard:create_update_user' %}?user_id={{courier.id}}"

@@ -9,5 +9,5 @@ urlpatterns = [
     # path('auth/user/')
     
     path('meals/',views.MealListAPI.as_view()),
-    path('order/list_create_order/',views.OrderAPIView.as_view()),
+    path('order/list_create_order/',views.OrderAPI.as_view()),
 ]

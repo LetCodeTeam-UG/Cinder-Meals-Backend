@@ -148,7 +148,7 @@ class GetMealByIdAPI(generics.GenericAPIView):
         return Response(response_data, status=status.HTTP_200_OK)
 
 
-class AddOrderItemAPIView(generics.CreateAPIView):
+class MyCartAPI(generics.CreateAPIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
     serializer_class = OrderItemSerializer
@@ -181,7 +181,7 @@ class AddOrderItemAPIView(generics.CreateAPIView):
 
         return Response({'order_item_id': order_item.id}, status=status.HTTP_201_CREATED)
 
-class OrderAPIView(generics.ListAPIView):
+class OrderAPI(generics.ListAPIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
     serializer_class = OrderSerializer
@@ -193,7 +193,7 @@ class OrderAPIView(generics.ListAPIView):
     def post(self, request, *args, **kwargs):
         order_items_data = request.data.get('order_items', [])
         location_id = request.data.get('location', None)
-        payment_method = request.data.get('payment_method', PaymentMethod.MOBILE_MONEY.value)
+        payment_method = request.data.get('payment_method', PaymentMethod.CASH.value)
         phone = request.data.get('phone', None)
 
         # Validate location
@@ -220,7 +220,7 @@ class OrderAPIView(generics.ListAPIView):
                 return Response({'error': 'Meal is required.'}, status=status.HTTP_400_BAD_REQUEST)
 
             try:
-                meal = Meal.objects.get(pk=meal_id)
+                meal = Meal.objects.get(id=meal_id)
             except Meal.DoesNotExist:
                 return Response({'error': 'Meal does not exist.'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -228,22 +228,26 @@ class OrderAPIView(generics.ListAPIView):
             order_item = OrderItem.objects.filter(order=order, meal=meal).first()
 
             if order_item:
-                # Update quantity of existing order item
+                # Update quantity and total price of existing order item
                 order_item.quantity += quantity
+                order_item.total_price = order_item.quantity * meal.price
                 order_item.save()
             else:
-                # Create new order item
-                order_item = OrderItem.objects.create(user=request.user, meal=meal, quantity=quantity, allergies=allergies, additional_info=additional_info)
-
+                # Create new order item with total price
+                total_price = quantity * meal.price
+                order_item = OrderItem.objects.create(user=request.user, meal=meal, quantity=quantity, allergies=allergies, additional_info=additional_info, total=total_price)
                 # Add order item to order
                 order.order_items.add(order_item)
 
         # Calculate order totals
-        order.sub_total = sum([item.get_total() for item in order.order_items.all()])
-        order.total = order.sub_total + location.delivery_fee
+        order.sub_total =  sum(item.meal.price * item.quantity for item in order.order_items.all())
+        
+        order.total = order.sub_total + order.location.delivery_fee
 
         # Save order
         order.save()
 
         serializer = OrderSerializer(order)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+

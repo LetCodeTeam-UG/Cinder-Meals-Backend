@@ -3,10 +3,10 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views import View
 from accounts.models import User
-from cinder_meals.utils.constants import OrderStatus
+from cinder_meals.utils.constants import OrderStatus, MealType
 from django.utils.decorators import method_decorator
 from cinder_meals.utils.decorators import AdminAndCourierOnly
-from dashboard.models import Meal, Order, DeliveryLocation
+from dashboard.models import Meal, Order, DeliveryLocation, Delivery
 from dashboard.forms import DeliveryLocationForm, MealForm
 
 class DashboardView(View):
@@ -49,11 +49,11 @@ class CreateUpdateUserView(View):
                     messages.error(request, error)
                 return redirect(request.META.get('HTTP_REFERER'))
         if edit_user_id:
-            user = User.objects.get(id=edit_user_id)
-            email = user.email
+            print
+            user_found = User.objects.get(id=edit_user_id)
+            print(user_found.dob)
             context = {
-                'user' : user,
-                'email' : email,
+                'user_found' : user_found,
             }
             return render(request, self.template_name, context)
         
@@ -63,66 +63,70 @@ class CreateUpdateUserView(View):
     
     def post(self, request):
         user_id = request.POST.get('user_id')
-        first_name = request.POST.get('first_name')
-        last_name = request.POST.get('last_name')
-        if first_name == None or last_name == None:
-            messages.error(request, 'First name and last name are required')
-            return render(request, self.template_name)
-        else:
-            fullname = first_name + ' ' + last_name
+        fullname = request.POST.get('fullname')
         email = request.POST.get('email')
         phone = request.POST.get('phone_number')
         role = request.POST.get('group')
         gender = request.POST.get('gender')
         dob = request.POST.get('dob')
+        print(dob)
         password = request.POST.get('password')
         confirm = request.POST.get('confirm')
         is_active = request.POST.get('is_active')
         context = {k : v for k, v in request.POST.items()}
-        print('context')
+        print(context)
         if user_id:
-            user = User.objects.get(id=user_id).first()
-            if user:
-                user.fullname = fullname
-                user.email = email
-                user.phone = phone
-                user.gender = gender
-                user.dob = dob
-            
-        try: 
-            user = User.objects.filter(email=email).first()
-            if user:
-                messages.error(request, 'User with this email already exists')
-                return render(request, self.template_name, context)
-            
+            user_found = User.objects.filter(id=user_id).first()
+            if user_found:
+                user_found.fullname = fullname
+                user_found.email = email
+                user_found.phone = phone
+                user_found.gender = gender
+                user_found.dob = dob
+                # user.is_active = is_active
+                user_found.save()
+                messages.success(request, 'User updated successfully')
+                redirect_url = reverse('dashboard:users')
+                return redirect(redirect_url)
             else:
-                if password == confirm:
-                    user = User.objects.create_user(
-                        fullname=fullname,
-                        email=email,
-                        phone=phone,
-                        gender=gender,
-                        dob=dob,
-                        password=password,
-                    )
-                    if role == 'Admin':
-                        user.is_admin = True
-                    elif role == 'Courier':
-                        user.is_courier = True
-                    elif role == 'Customer':
-                        user.is_customer = True
-                    user.save()
-                    messages.success(request, 'User created successfully')
-                    redirect_url = reverse('dashboard:users')
-                    return redirect(redirect_url)
+                messages.error(request, 'User does not exist')
+                return render(request, self.template_name, context)
+        else:      
+            
+            try: 
+                user = User.objects.filter(email=email).first()
+                if user:
+                    messages.error(request, 'User with this email already exists')
+                    return render(request, self.template_name, context)
                 
                 else:
-                    messages.error(request, 'Passwords do not match')
-                    return render(request, self.template_name, context)
-        except Exception as e:
-            for error in e.args:
-                messages.error(request, error)
-            return render(request, self.template_name, context)
+                    if password == confirm:
+                        user = User.objects.create_user(
+                            fullname=fullname,
+                            email=email,
+                            phone=phone,
+                            gender=gender,
+                            dob=dob,
+                            password=password,
+                        )
+                        if role == 'Admin':
+                            user.is_admin = True
+                        elif role == 'Courier':
+                            user.is_courier = True
+                        elif role == 'Customer':
+                            user.is_customer = True
+                        user.save()
+                        messages.success(request, 'User created successfully')
+                        redirect_url = reverse('dashboard:users')
+                        return redirect(redirect_url)
+                    
+                    else:
+                        messages.error(request, 'Passwords do not match')
+                        return render(request, self.template_name, context)
+            except Exception as e:
+                for error in e.args:
+                    messages.error(request, error)
+                return render(request, self.template_name, context)
         
 
 class UserProfileView(View):
@@ -169,7 +173,7 @@ class OrderListView(View):
                 messages.error(request, "Order does not exist")
                 return redirect('dashboard:orders')
             
-        orders = Order.objects.all().order_by('-created_at')
+        orders = Order.objects.all().order_by('-id')
         context = {
             'orders' : orders,
         }
@@ -179,11 +183,12 @@ class OrderDetailView(View):
     @method_decorator(AdminAndCourierOnly)
     def get(self, request):
         order_id = request.GET.get('order_id')
-        print(order_id)
         order = Order.objects.filter(id=order_id).first()
+        delivery = Delivery.objects.filter(order=order).first()
         if order:
             context = {
                 'order' : order,
+                'delivery' : delivery,
             }
             return render(request, 'pages/order-detail.html', context)
         else:
@@ -297,33 +302,50 @@ class MealView(View):
 class MealListView(View):
     @method_decorator(AdminAndCourierOnly)
     def get(self, request, *args, **kwargs):
-        meals = Meal.objects.filter(published = True).order_by('-id')
+        delete_meal_id = request.GET.get('delete_meal_id')
+        if delete_meal_id:
+            meal = Meal.objects.filter(id=delete_meal_id).first()
+            if meal:
+                meal.delete()
+                messages.success(request,f'{meal.title} deleted successfully')
+                return redirect('dashboard:meals')
+            else:
+                messages.error(request, "Meal does not exist")
+                return redirect('dashboard:meals')
+            
+        meals = Meal.objects.all().order_by('-id')
         context = {
             'meals' : meals,
         }
         return render(request, 'pages/meals.html',context)
-    
-    
-
 
 class AddMealView(View):
     template_name = 'pages/add-meal.html'
 
     @method_decorator(AdminAndCourierOnly)
     def get(self, request, *args, **kwargs):
+        edit_meal_id = request.GET.get('edit_meal_id')
         context = {}
-        return render(request, 'pages/add-meal.html',context)
+        if edit_meal_id:
+            meal = Meal.objects.filter(id=edit_meal_id).first()
+            context.update({'meal':meal})
+            return render(request, self.template_name,context)
+        meal_types = MealType
+        context.update({'meal_types':meal_types})
+        return render(request, self.template_name,context)
     
     def post(self, request, *args, **kwargs):
-        form = MealForm(request.POST)
-
+        form = MealForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
-            return redirect('dashboard:add-meal')
-        
-        print(form.errors)
+            meal = form.save(commit=False)
+            publish = request.POST.get('publish') == 'on'
+            print(publish)
+            meal.published = publish
+            meal.save()
+            messages.success(request, "Meal added successfully")
+            return redirect('dashboard:meals')
+        messages.error(request, "Meal not added")
         return redirect ('dashboard:add-meal')
-
 
 
 class CustomersView(View):
@@ -432,13 +454,14 @@ class UpdateProfileView(View):
         phone = request.POST.get('phone')
         gender = request.POST.get('gender')
         dob = request.POST.get('dob')
-        
+        print(dob)
+        print(1)
         user = User.objects.filter(id=request.user.id).first()
         if user:
             user.fullname = fullname
             user.phone = phone
             user.gender = gender
-            user.dob = dob
+            # user.dob = dob
             user.save()
             messages.success(request, 'Profile updated successfully')
             return redirect('dashboard:profile')
