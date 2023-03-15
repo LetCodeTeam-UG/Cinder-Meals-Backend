@@ -21,14 +21,14 @@
                     <i class="fa fa-angle-down scale5 ml-3"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="#">2020</a>
-                    <a class="dropdown-item" href="#">2019</a>
-                    <a class="dropdown-item" href="#">2018</a>
-                    <a class="dropdown-item" href="#">2017</a>
-                    <a class="dropdown-item" href="#">2016</a>
+                    <a class="dropdown-item" href="{% url 'dashboard:pending_orders' %}">Pending</a>
+                    <a class="dropdown-item" href="#">Processing</a>
+                    <a class="dropdown-item" href="#">On Delivery</a>
+                    <a class="dropdown-item" href="{% url 'dashboard:cancelled_orders' %}">Cancelled</a>
+                    <a class="dropdown-item" href="{% url 'dashboard:completed_orders' %}">Completed</a>
                 </div>
             </div>
-            <div class="dropdown custom-dropdown ml-3">
+            <!-- <div class="dropdown custom-dropdown ml-3">
                 <button type="button" class="btn btn-primary light d-flex text-align-center svg-btn"
                     data-toggle="dropdown" aria-expanded="false">
                     <svg width="16" height="16" class="scale5" viewBox="0 0 28 28" fill="none"
@@ -48,7 +48,7 @@
                     <a class="dropdown-item" href="#">Saturday</a>
                     <a class="dropdown-item" href="#">Sunday</a>
                 </div>
-            </div>
+            </div> -->
         </div>
         <div class="row">
             <div class="col-12">
@@ -120,12 +120,15 @@
     (function ($) {
 
         var table = $('#example5').DataTable({
-            searching: false,
+            searching: true,
             paging: true,
-            select: false,
+            select: true,
             //info: false,         
-            lengthChange: false
-
+            lengthChange: true,
+            sort: false,
+            "order": [
+                [0, "desc"]
+            ],
         });
         $('#example tbody').on('click', 'tr', function () {
             var data = table.row(this).data();

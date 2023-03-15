@@ -86,13 +86,31 @@
                                             <a class="dropdown-item" href="{% url 'dashboard:order_detail' %}?order_id={{order.id}}"><i
                                                     class="la la-eye scale5 text-secondary mr-2"></i> View
                                                 Order</a>
-                                            <a class="dropdown-item"
-                                                href="{% url 'dashboard:orders' %}?accept_order_id={{order.id}}"><i
-                                                    class="las la-check-square scale5 text-primary mr-2"></i> Accept
-                                                Order</a>
-                                            <a class="dropdown-item" href="{% url 'dashboard:orders' %}?reject_order_id={{order.id}}"><i
-                                                    class="las la-times-circle scale5 text-danger mr-2"></i> Reject
-                                                Order</a>
+                                                {% if order.status == "Pending" %}
+                                                <a class="dropdown-item"
+                                                    href="{% url 'dashboard:orders' %}?accept_order_id={{order.id}}"><i
+                                                        class="las la-check-square scale5 text-primary mr-2"></i> Accept
+                                                    Order</a>
+                                                <a class="dropdown-item" href="{% url 'dashboard:orders' %}?reject_order_id={{order.id}}"><i
+                                                        class="las la-times-circle scale5 text-danger mr-2"></i> Reject
+                                                    Order</a>
+                                                  {% elif order.status == "Approved" %}
+                                                <a class="dropdown-item"
+                                                    href="{% url 'dashboard:orders' %}?process_order_id={{order.id}}"><i
+                                                        class="las la-check-square scale5 text-primary mr-2"></i> Process
+                                                    Order</a>
+                                                <a class="dropdown-item" href="{% url 'dashboard:orders' %}?reject_order_id={{order.id}}"><i
+                                                        class="las la-times-circle scale5 text-danger mr-2"></i> Reject
+                                                    Order</a>
+                                                {% elif order.status == "Processing" %}
+                                                <a class="dropdown-item"
+                                                    href="{% url 'dashboard:orders' %}?on_the_way_order_id={{order.id}}"><i
+                                                        class="las la-check-square scale5 text-primary mr-2"></i> Assign Courier</a>
+                                                {% elif order.status == "On the Way" %}
+                                                <a class="dropdown-item"
+                                                    href="{% url 'dashboard:orders' %}?complete_order_id={{order.id}}"><i
+                                                        class="las la-check-square scale5 text-primary mr-2"></i> Mark as Complete</a>
+                                                {% endif %}
                                         </div>
                                     </div>
                                 </td>
@@ -114,12 +132,15 @@
     (function ($) {
 
         var table = $('#example5').DataTable({
-            searching: false,
+            searching: true,
             paging: true,
-            select: false,
+            select: true,
             //info: false,         
-            lengthChange: false
-
+            lengthChange: true,
+            sort: false,
+            "order": [
+                [0, "desc"]
+            ],
         });
         $('#example tbody').on('click', 'tr', function () {
             var data = table.row(this).data();

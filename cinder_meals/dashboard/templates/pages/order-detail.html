@@ -143,7 +143,7 @@
                                     </div>
                                 </div>
                             </div>
-                            {% if delivery %}   
+                            {% if delivery %}
                             <div class="col-xl-12">
                                 <div class="card">
                                     <div class="card-body">
@@ -177,11 +177,32 @@
                                 </div>
                             </div>
                             {% endif %}
-                            {% if order.status == 'PENDING' %}
-                            
+                            <!-- Logic to assign processing orders to couriers -->
+                            {% if order.status == 'Processing' %}
+                            <div class="col-xl-12">
+                                <div class="col-xl-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="text-center">
+                                                <div class="d-flex mx-2 ml-auto">
+                                                    <button type="button" class="btn btn-primary BRN-SM"
+                                                        data-toggle="modal" data-target="#exampleModalLong"
+                                                        aria-expanded="false">
+                                                        <span class="btn-icon-end">ADD
+                                                            <i class="fa fa-plus"></i></span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        {% endblock content %}
+    </div>
+</div>
+{% endblock content %}
