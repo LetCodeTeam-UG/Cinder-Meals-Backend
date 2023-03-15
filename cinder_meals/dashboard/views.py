@@ -468,3 +468,8 @@ class UpdateProfileView(View):
         else:
             messages.error(request, 'User does not exist')
             return redirect('dashboard:profile')
+        
+class Payments(View):
+    @method_decorator(AdminAndCourierOnly)
+    def get(self, request):
+        return render(request, 'pages/payments.html')
