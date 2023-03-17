@@ -10,26 +10,26 @@ from cinder_meals.utils.decorators import AdminAndCourierOnly, CourierOnly
 from dashboard.models import Meal, Order, DeliveryLocation, Delivery, Payment
 from dashboard.forms import DeliveryLocationForm, MealForm
 
-def is_courier(user):
-    return user.is_authenticated and user.is_courier
+# def is_courier(user):
+#     return user.is_authenticated and user.is_courier
 
-def CourierOnly(view_func):
-    return user_passes_test(is_courier)(view_func)
+# def CourierOnly(view_func):
+#     return user_passes_test(is_courier)(view_func)
 
-def is_admin(user):
-    return user.is_authenticated and user.is_admin
+# def is_admin(user):
+#     return user.is_authenticated and user.is_admin
 
-def AdminOnly(view_func):
-    return user_passes_test(is_admin)(view_func)
+# def AdminOnly(view_func):
+#     return user_passes_test(is_admin)(view_func)
 
-def is_courier_or_admin(user):
-    return user.is_authenticated and (user.is_courier or user.is_admin)
+# def is_courier_or_admin(user):
+#     return user.is_authenticated and (user.is_courier or user.is_admin)
 
-def CourierOrAdminOnly(view_func):
-    return user_passes_test(is_courier_or_admin)(view_func)
+# def CourierOrAdminOnly(view_func):
+#     return user_passes_test(is_courier_or_admin)(view_func)
 
 class DashboardView(View):
-    @method_decorator(CourierOrAdminOnly)
+    # @method_decorator(CourierOrAdminOnly)
     def get(self, request):
         most_selling_meals = Meal.objects.filter(published = True).order_by('-orders_count')[:5]
         meal_count = Meal.objects.filter(published=True).order_by('-id').count()
