@@ -53,7 +53,7 @@ class DashboardView(View):
     
 class CreateUpdateUserView(View):
     template_name = 'pages/create-update-user.html'
-    @method_decorator(AdminOnly)
+    # @method_decorator(AdminOnly)
     def get(self, request):
         delete_user_id = request.GET.get('delete_user_id')
         edit_user_id = request.GET.get('edit_user_id')
