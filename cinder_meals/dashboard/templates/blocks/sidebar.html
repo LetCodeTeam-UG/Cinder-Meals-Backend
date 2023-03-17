@@ -81,20 +81,15 @@
                     <span class="nav-text">Orders</span>
                 </a>
             </li>
-            <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
-                    <span class="nav-text">Menu</span>
+            <li><a  href="{% url 'dashboard:meals' %}" aria-expanded="false">
+                    <span class="nav-text">Meals</span>
                 </a>
-                <ul aria-expanded="false">
-                    <li><a href="{% url 'dashboard:meals' %}">Meals</a></li>
-                </ul>
+                
             </li>
-            <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
-                    <span class="nav-text">Users</span>
+            <li><a href="{% url 'dashboard:couriers' %}" aria-expanded="false">
+                    <span class="nav-text">Couriers</span>
                 </a>
-                <ul aria-expanded="false">
-                    <li><a href="{% url 'dashboard:customers' %}">Customers</a></li>
-                    <li><a href="{% url 'dashboard:couriers' %}">Couriers</a></li>
-                </ul>
+                
             </li>
 
             <li><a href="{% url 'dashboard:delivery_locations' %}" class="ai-icon" aria-expanded="false">
