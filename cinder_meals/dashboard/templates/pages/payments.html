@@ -56,11 +56,11 @@
                             {% for objects in payments%}
                             <tr>
                                 <td>#{{ objects.payment_id }}</td>
-                                <td>{{ objects.user }}</td>s
+                                <td>{{ objects.user }}</td>
+                                <td>{{ objects.network }}</td>
+                                <td>{{ objects.phone }}</td>
+                                <td>{{ objects.date }}</td>s
 
-                                <td><span class="btn btn-sm light btn-primary  fs-16">GHC
-                                        {{ objects.network }}</span></td>
-                                <td></td>
                                 <td>
                                     <div class="sweetalert">
                                         <div class="d-flex">
