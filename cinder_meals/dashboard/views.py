@@ -4,32 +4,13 @@ from django.urls import reverse
 from django.views import View
 from accounts.models import User
 from cinder_meals.utils.constants import OrderStatus, MealType
-from django.contrib.auth.decorators import user_passes_test
 from django.utils.decorators import method_decorator
-from cinder_meals.utils.decorators import AdminAndCourierOnly, CourierOnly
+from cinder_meals.utils.decorators import AdminAndCourierOnly
 from dashboard.models import Meal, Order, DeliveryLocation, Delivery, Payment
 from dashboard.forms import DeliveryLocationForm, MealForm
 
-# def is_courier(user):
-#     return user.is_authenticated and user.is_courier
-
-# def CourierOnly(view_func):
-#     return user_passes_test(is_courier)(view_func)
-
-# def is_admin(user):
-#     return user.is_authenticated and user.is_admin
-
-# def AdminOnly(view_func):
-#     return user_passes_test(is_admin)(view_func)
-
-# def is_courier_or_admin(user):
-#     return user.is_authenticated and (user.is_courier or user.is_admin)
-
-# def CourierOrAdminOnly(view_func):
-#     return user_passes_test(is_courier_or_admin)(view_func)
-
 class DashboardView(View):
-    # @method_decorator(CourierOrAdminOnly)
+    @method_decorator(AdminAndCourierOnly)
     def get(self, request):
         most_selling_meals = Meal.objects.filter(published = True).order_by('-orders_count')[:5]
         meal_count = Meal.objects.filter(published=True).order_by('-id').count()
@@ -53,7 +34,7 @@ class DashboardView(View):
     
 class CreateUpdateUserView(View):
     template_name = 'pages/create-update-user.html'
-    # @method_decorator(AdminOnly)
+    @method_decorator(AdminAndCourierOnly)
     def get(self, request):
         delete_user_id = request.GET.get('delete_user_id')
         edit_user_id = request.GET.get('edit_user_id')
@@ -166,7 +147,7 @@ class OrderView(View):
         return render(request, 'pages/order-detail.html')
     
 class OrderListView(View):
-    @method_decorator(CourierOnly)
+    @method_decorator(AdminAndCourierOnly)
     def get(self, request):
         approve_order_id = request.GET.get('accept_order_id')
         reject_order_id = request.GET.get('reject_order_id')
