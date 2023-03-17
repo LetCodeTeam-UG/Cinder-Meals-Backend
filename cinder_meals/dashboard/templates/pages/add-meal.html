@@ -2,7 +2,6 @@
 {% block page_title %}Create/Update Meal{% endblock %}
 {% block content %}
 
-{% if request.user.is_authenticated and request.user.is_admin %}
 
 <div class="content-body">
   <div class="container-fluid">
@@ -85,7 +84,6 @@
 
   </div>
 </div>
-{% endif %}
 
 {% endblock %}
 {% block scripts %}
