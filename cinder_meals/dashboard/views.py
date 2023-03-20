@@ -51,7 +51,6 @@ class CreateUpdateUserView(View):
         if edit_user_id:
             print
             user_found = User.objects.get(id=edit_user_id)
-            print(user_found.dob)
             context = {
                 'user_found' : user_found,
             }
@@ -69,12 +68,10 @@ class CreateUpdateUserView(View):
         role = request.POST.get('group')
         gender = request.POST.get('gender')
         dob = request.POST.get('dob')
-        print(dob)
         password = request.POST.get('password')
         confirm = request.POST.get('confirm')
         is_active = request.POST.get('is_active')
         context = {k : v for k, v in request.POST.items()}
-        print(context)
         if user_id:
             user_found = User.objects.filter(id=user_id).first()
             if user_found:
@@ -222,7 +219,6 @@ class PendingOrderListView(View):
                 messages.error(request, "Order does not exist")
                 return redirect('dashboard:orders')
         pending_orders = Order.objects.filter(status=OrderStatus.PENDING.value).order_by('-created_at')
-        print(pending_orders)
         context = {
             'pending_orders' : pending_orders,
         }
@@ -336,10 +332,24 @@ class AddMealView(View):
     
     def post(self, request, *args, **kwargs):
         form = MealForm(request.POST, request.FILES)
+        edit_meal_id = request.POST.get('meal_id')
+        if edit_meal_id:
+            meal = Meal.objects.filter(id=edit_meal_id).first()
+            meal.title = request.POST.get('title')
+            image = request.FILES.get('image')
+            if image:
+                meal.image = image
+            meal.description = request.POST.get('description')
+            meal.type = request.POST.get('type')
+            meal.price = request.POST.get('price')
+            publish = request.POST.get('publish') == 'on'
+            meal.published = publish
+            meal.save()
+            messages.success(request, "Meal updated successfully")
+            return redirect('dashboard:meals')
         if form.is_valid():
             meal = form.save(commit=False)
             publish = request.POST.get('publish') == 'on'
-            print(publish)
             meal.published = publish
             meal.save()
             messages.success(request, "Meal added successfully")
@@ -454,8 +464,6 @@ class UpdateProfileView(View):
         phone = request.POST.get('phone')
         gender = request.POST.get('gender')
         dob = request.POST.get('dob')
-        print(dob)
-        print(1)
         user = User.objects.filter(id=request.user.id).first()
         if user:
             user.fullname = fullname

@@ -128,7 +128,6 @@ class Order(models.Model):
 
     #         # Calculate the sub total and total
     #         self.sub_total = sum(item.meal.price for item in self.order_items.all())
-    #         print(self.sub_total)
     #         if self.location:
     #             self.total = self.sub_total + self.location.delivery_fee
     #         else:

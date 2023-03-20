@@ -12,4 +12,4 @@ class DeliveryLocationForm(forms.ModelForm):
 class MealForm(forms.ModelForm):
     class Meta:
         model = Meal
-        fields = [ 'image','title', 'description', 'price', 'published']
+        fields = [ 'image','title', 'description', 'type', 'price', 'published']

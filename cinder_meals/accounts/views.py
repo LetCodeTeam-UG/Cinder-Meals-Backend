@@ -25,7 +25,6 @@ class LoginView(View):
                 return render(request, self.template_name, context)
         else:
             context = {k : v for k, v in request.POST.items()}
-            print(context)
             messages.error(request, "Invalid credentials")
             return render(request, self.template_name, context)
 

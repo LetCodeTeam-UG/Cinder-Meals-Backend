@@ -29,8 +29,8 @@
             <img id="preview" src="#" alt="Image Preview" style="width: 300px; height: auto; display: none;">
           </div>
           {% endif %}
-          <input type="file" class="form-control" id="meal-image" name="image" onchange="previewImage(event)"
-            {% if not meal.id %}required{% endif %}>
+          <input type="file" class="form-control" id="meal-image" name="image" {% if meal.image.url %}
+            {{ meal.image.url }} {% endif %} onchange="previewImage(event)" {% if not meal.id %}required{% endif %}>
         </div>
 
         <div class="form-group">
