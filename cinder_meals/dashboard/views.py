@@ -6,7 +6,7 @@ from accounts.models import User
 from cinder_meals.utils.constants import OrderStatus, MealType
 from django.utils.decorators import method_decorator
 from cinder_meals.utils.decorators import AdminAndCourierOnly
-from dashboard.models import Meal, Order, DeliveryLocation, Delivery
+from dashboard.models import Meal, Order, DeliveryLocation, Delivery, Payment
 from dashboard.forms import DeliveryLocationForm, MealForm
 
 class DashboardView(View):
@@ -476,3 +476,12 @@ class UpdateProfileView(View):
         else:
             messages.error(request, 'User does not exist')
             return redirect('dashboard:profile')
+        
+class Payments(View):
+    @method_decorator(AdminAndCourierOnly)
+    def get(self, request):
+        payment = Payment.objects.all()
+        context = {
+            'payment' : payment
+        }
+        return render(request, 'pages/payments.html', context)

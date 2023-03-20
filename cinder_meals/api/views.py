@@ -2,11 +2,14 @@ from rest_framework import generics,permissions, status
 from django.contrib.auth import logout
 from rest_framework.permissions import IsAuthenticated
 from knox.auth import TokenAuthentication
+from rest_framework.authtoken.serializers import AuthTokenSerializer
+from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
 from knox.models import AuthToken
 from knox.views import LoginView as KnoxLoginView
 from knox.views import LogoutView as KnoxLogoutView
+from django.views.decorators.csrf import csrf_exempt
 
 from accounts.models import User
 from dashboard.models import Order, Delivery, Payment,Meal, OrderItem, DeliveryLocation
@@ -67,14 +70,17 @@ class LoginAPI(KnoxLoginView):
                 }
                 return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
         user = serializer.validated_data
+        token = AuthToken.objects.create(user=user)
         
         response_data = {
             "error_message" : None,
             "user" : UserSerializer(user, context=self.serializer_class()).data,
-            "token" : AuthToken.objects.create(user)[1],
+            "token" : token[1],
         }
-        
-        return Response(response_data, status=status.HTTP_200_OK)
+        response = Response(response_data, status=status.HTTP_200_OK)
+        response["Authorization"] = f"Token {token[1]}"
+        return response
+        # return Response(response_data, status=status.HTTP_200_OK)
 
         
 class LogoutAPI(KnoxLogoutView):

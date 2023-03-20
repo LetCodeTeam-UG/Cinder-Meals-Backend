@@ -1,3 +1,5 @@
+{% if request.user.is_authenticated and request.user.is_admin %}
+
 <div class="deznav">
     <div class="deznav-scroll">
         <ul class="metismenu" id="menu">
@@ -37,7 +39,8 @@
                     <li><a href="{% url 'dashboard:create_update_user' %}">Create User</a></li>
                 </ul>
             </li>
-            <li><a href="{% url 'accounts:login' %}" class="ai-icon" aria-expanded="false">
+            <li><a href="{% url 'dashboard:payments' %}" class="ai-icon" aria-expanded="false">
+                    <i class="flaticon-381-settings-2"></i>
                     <span class="nav-text">Payments</span>
                 </a>
             </li>
@@ -50,9 +53,49 @@
                 </a>
             </li>
         </ul>
-        <div class="copyright">
+        <div class="copyright" style="margin-top: 20%;">
             <p><strong>Cinder Meals </strong> © {% now 'Y' %} All Rights Reserved</p>
 
         </div>
     </div>
 </div>
+
+{% elif request.user.is_authenticated and request.user.is_courier %}
+
+
+<div class="deznav">
+    <div class="deznav-scroll">
+        <ul class="metismenu" id="menu">
+        
+            <li><a href="{% url 'dashboard:orders' %}" class="ai-icon" aria-expanded="false">
+                    <span class="nav-text">Orders</span>
+                </a>
+            </li>
+            <!-- <li><a  href="{% url 'dashboard:meals' %}" aria-expanded="false">
+                    <span class="nav-text">Meals</span>
+                </a>
+                
+            </li> -->
+            <li><a href="{% url 'dashboard:couriers' %}" aria-expanded="false">
+                    <span class="nav-text">Couriers</span>
+                </a>
+                
+            </li>
+
+            <li><a href="{% url 'dashboard:delivery_locations' %}" class="ai-icon" aria-expanded="false">
+                    <span class="nav-text">Delivery Locations</span>
+                </a>
+            </li>
+            <li><a href="{% url 'dashboard:profile' %}" class="ai-icon" aria-expanded="false">
+                    <span class="nav-text">Profile</span>
+                </a>
+            </li>
+        </ul>
+        <div class="copyright" style="margin-top: 60%;">
+            <p><strong>Cinder Meals </strong> © {% now 'Y' %} All Rights Reserved</p>
+
+        </div>
+    </div>
+</div>
+
+{% endif %}
