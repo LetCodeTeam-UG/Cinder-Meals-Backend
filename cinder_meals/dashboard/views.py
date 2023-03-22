@@ -293,6 +293,40 @@ class CancelledOrderListView(View):
             'cancelled_orders' : cancelled_orders,
         }
         return render(request, 'pages/cancelled_orders.html', context)
+    
+   
+class ApprovedOrderListView(View):
+    @method_decorator(AdminAndCourierOnly)
+    def get(self, request):
+        approved_order_id = request.GET.get('approved_order_id')
+        reject_order_id = request.GET.get('reject_order_id')
+        if approved_order_id:
+            order = Order.objects.filter(id=approved_order_id).first()
+            if order:
+                order.status = OrderStatus.APPROVED.value
+                order.save()
+                messages.success(request,f'Order {order.order_id} approved successfully')
+                return redirect('dashboard:cancelled_orders')
+            else:
+                messages.error(request, "Order does not exist")
+                return redirect('dashboard:cancelled_orders')
+        
+        if reject_order_id:
+            order = Order.objects.filter(id=reject_order_id).first()
+            if order:
+                order.status = OrderStatus.CANCELLED.value
+                order.save()
+                messages.success(request,f'Order {order.order_id} rejected successfully')
+                return redirect('dashboard:orders')
+            else:
+                messages.error(request, "Order does not exist")
+                return redirect('dashboard:orders')
+        
+        cancelled_orders = Order.objects.filter(status=OrderStatus.CANCELLED.value).order_by('-created_at')
+        context = {
+            'cancelled_orders' : cancelled_orders,
+        }
+        return render(request, 'pages/cancelled_orders.html', context)
 
 class MealView(View):
     @method_decorator(AdminAndCourierOnly)
