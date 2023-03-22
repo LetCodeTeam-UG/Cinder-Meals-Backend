@@ -299,27 +299,18 @@ class ApprovedOrderListView(View):
     @method_decorator(AdminAndCourierOnly)
     def get(self, request):
         approved_order_id = request.GET.get('approved_order_id')
-        if approved_order_id:
-            order = Order.objects.filter(id=approved_order_id).first()
-            if order:
-                order.status = OrderStatus.APPROVED.value
-                order.save()
-                messages.success(request,f'Order {order.order_id} approved successfully')
-                return redirect('dashboard:cancelled_orders')
-            else:
-                messages.error(request, "Order does not exist")
-                return redirect('dashboard:cancelled_orders')
+        # if approved_order_id:
+        #     order = Order.objects.filter(id=approved_order_id).first()
+        #     if order:
+        #         order.status = OrderStatus.APPROVED.value
+        #         order.save()
+        #         messages.success(request,f'Order {order.order_id} approved successfully')
+        #         return redirect('dashboard:cancelled_orders')
+        #     else:
+        #         messages.error(request, "Order does not exist")
+        #         return redirect('dashboard:cancelled_orders')
         
-        if reject_order_id:
-            order = Order.objects.filter(id=reject_order_id).first()
-            if order:
-                order.status = OrderStatus.CANCELLED.value
-                order.save()
-                messages.success(request,f'Order {order.order_id} rejected successfully')
-                return redirect('dashboard:orders')
-            else:
-                messages.error(request, "Order does not exist")
-                return redirect('dashboard:orders')
+
         
         approved_orders = Order.objects.filter(status=OrderStatus.APPROVED.value).order_by('-created_at')
         context = {
