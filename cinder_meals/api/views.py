@@ -133,8 +133,8 @@ class MealListAPI(generics.GenericAPIView):
 class GetMealByIdAPI(generics.GenericAPIView):
     permission_classes = [permissions.AllowAny] # Allow any user to access this API
 
-    def get(self, request, id):
-        meal = Meal.objects.filter(published=True, pk=id).first() # Get meal object by id
+    def get(self,request, id):
+        meal = Meal.objects.filter(published=True, id=id).first() # Get meal object by id
         try:
             meal = MealSerializer(meal).data # Serialize meal object to JSON data
         except Exception as e:
