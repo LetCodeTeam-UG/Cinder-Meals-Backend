@@ -1,7 +1,6 @@
 {% extends "base/base.html" %}
 {% block page_title %}Orders{% endblock %}
 {% block content %}
-{% if request.user.is_authenticated and request.user.is_admin %}
 
 <div class="content-body">
     <!-- row -->
@@ -125,14 +124,16 @@
         </div>
     </div>
 </div>
-{% else %}
-<!-- {% if request.user.is_authenticated and request.user.is_courier } -->
+{% endif %}
+
+{% if request.user.is_authenticated and request.user.is_courier } 
 <p>hello</p>
 
 {% endif %}
-
 {% endblock content %}
+
 {% block scripts %}
+
 <!-- Datatable -->
 <script src="/static/vendor/datatables/js/jquery.dataTables.min.js"></script>
 
