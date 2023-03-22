@@ -299,7 +299,6 @@ class ApprovedOrderListView(View):
     @method_decorator(AdminAndCourierOnly)
     def get(self, request):
         approved_order_id = request.GET.get('approved_order_id')
-        reject_order_id = request.GET.get('reject_order_id')
         if approved_order_id:
             order = Order.objects.filter(id=approved_order_id).first()
             if order:
@@ -322,11 +321,11 @@ class ApprovedOrderListView(View):
                 messages.error(request, "Order does not exist")
                 return redirect('dashboard:orders')
         
-        cancelled_orders = Order.objects.filter(status=OrderStatus.CANCELLED.value).order_by('-created_at')
+        approved_orders = Order.objects.filter(status=OrderStatus.APPROVED.value).order_by('-created_at')
         context = {
-            'cancelled_orders' : cancelled_orders,
+            'approved_orders' : approved_orders,
         }
-        return render(request, 'pages/cancelled_orders.html', context)
+        return render(request, 'pages/approved_orders.html', context)
 
 class MealView(View):
     @method_decorator(AdminAndCourierOnly)
