@@ -356,6 +356,30 @@ class AssignedOrderListView(View):
 class CourierAssignmentView(View):
     def get(self, request):
         order_id = request.GET.get('order_id')
+        
+        if order_id:
+            order = Order.objects.filter(id=order_id).first()
+            if order:
+                couriers = User.objects.filter(id='status=is_courier=True').first()
+                order.status = OrderStatus.ASSIGNED.value
+                order.save()
+                messages.success(request, f'Order {order.order_id} assigned to courier {courier_id} successfully')
+                return redirect('dashboard:orders')
+            else:
+                messages.error(request, "Order does not exist")
+                return redirect('dashboard:orders')
+
+        assigned_orders = Order.objects.filter(status=OrderStatus.ASSIGNED.value).order_by('-created_at')
+        couriers = User.objects.filter(status='is_courier=True')
+        context = {
+            'assigned': assigned_orders,
+            'couriers': couriers,
+        }
+        return render(request, 'pages/assigned_orders.html', context)
+
+class Personalizeviewsforassignenttociuriers(View):
+    def get(self, request):
+        order_id = request.GET.get('order_id')
         courier_id = request.GET.get('courier_id')
         
         if order_id and courier_id:
@@ -377,7 +401,6 @@ class CourierAssignmentView(View):
             'couriers': couriers,
         }
         return render(request, 'pages/assigned_orders.html', context)
-
 
 
 class MealView(View):

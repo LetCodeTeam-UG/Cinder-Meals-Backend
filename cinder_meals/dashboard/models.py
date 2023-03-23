@@ -92,6 +92,7 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     phone = models.CharField(max_length=20)
+    courier = models.ForeignKey('accounts.User', on_delete=models.CASCADE)
     location = models.ForeignKey('DeliveryLocation', on_delete=models.SET_NULL, null=True)
     order_note = models.CharField(max_length=200, null=True, blank=True)
     payment_method = models.CharField(max_length=15, default=PaymentMethod.MOBILE_MONEY.value)
