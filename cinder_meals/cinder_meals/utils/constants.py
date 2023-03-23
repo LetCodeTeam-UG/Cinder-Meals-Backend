@@ -18,6 +18,7 @@ class OrderStatus(Enum):
     ON_THE_WAY = 'On the Way'
     COMPLETED = 'Completed'
     ASSIGNED = 'Assigned'
+    DELIVERED = 'Delivered'
 
 class PaymentMethod(Enum):
     CASH = 'Cash'
