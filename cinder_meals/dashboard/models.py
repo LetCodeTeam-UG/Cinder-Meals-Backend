@@ -138,6 +138,7 @@ class Order(models.Model):
     #         self.order_items.set(list(self.order_items.all()))
 
 class Delivery(models.Model):
+    name = models.CharField(max_length=200, default='Delivery')
     courier = models.ForeignKey('accounts.User', on_delete=models.CASCADE)
     order = models.ForeignKey('Order', on_delete=models.CASCADE)
     date = models.DateField(auto_now_add=True)

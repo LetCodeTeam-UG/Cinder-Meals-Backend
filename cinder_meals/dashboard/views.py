@@ -294,6 +294,38 @@ class CancelledOrderListView(View):
         }
         return render(request, 'pages/cancelled_orders.html', context)
     
+class CancelledOrderListView(View):
+    @method_decorator(AdminAndCourierOnly)
+    def get(self, request):
+        approve_order_id = request.GET.get('accept_order_id')
+        reject_order_id = request.GET.get('reject_order_id')
+        if approve_order_id:
+            order = Order.objects.filter(id=approve_order_id).first()
+            if order:
+                order.status = OrderStatus.APPROVED.value
+                order.save()
+                messages.success(request,f'Order {order.order_id} approved successfully')
+                return redirect('dashboard:cancelled_orders')
+            else:
+                messages.error(request, "Order does not exist")
+                return redirect('dashboard:cancelled_orders')
+        
+        if reject_order_id:
+            order = Order.objects.filter(id=reject_order_id).first()
+            if order:
+                order.status = OrderStatus.CANCELLED.value
+                order.save()
+                messages.success(request,f'Order {order.order_id} rejected successfully')
+                return redirect('dashboard:orders')
+            else:
+                messages.error(request, "Order does not exist")
+                return redirect('dashboard:orders')
+        
+        cancelled_orders = Order.objects.filter(status=OrderStatus.CANCELLED.value).order_by('-created_at')
+        context = {
+            'cancelled_orders' : cancelled_orders,
+        }
+        return render(request, 'pages/cancelled_orders.html', context)
    
 class ApprovedOrderListView(View):
     @method_decorator(AdminAndCourierOnly)
@@ -306,6 +338,18 @@ class ApprovedOrderListView(View):
             'approved_orders' : approved_orders,
         }
         return render(request, 'pages/approved_orders.html', context)
+    
+class AssignedOrderListView(View):
+    @method_decorator(AdminAndCourierOnly)
+    def get(self, request):
+        approved_order_id = request.GET.get('approved_order_id')
+
+        
+        assigned_orders = Order.objects.filter(status=OrderStatus.ASSIGNED.value).order_by('-created_at')
+        context = {
+            'assigned_orders' : assigned_orders,
+        }
+        return render(request, 'pages/assigned_orders.html', context)
 
 
 # @method_decorator( name='dispatch')
@@ -327,10 +371,13 @@ class CourierAssignmentView(View):
                 return redirect('dashboard:orders')
 
         assigned_orders = Order.objects.filter(status=OrderStatus.ASSIGNED.value).order_by('-created_at')
+        couriers = User.objects.filter(status='is_courier=True')
         context = {
             'assigned': assigned_orders,
+            'couriers': couriers,
         }
         return render(request, 'pages/assigned_orders.html', context)
+
 
 
 class MealView(View):

@@ -24,8 +24,9 @@
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">
                     <a class="dropdown-item" href="{% url 'dashboard:pending_orders' %}">Pending</a>
-                    <a class="dropdown-item" href="#">Processing</a>
+                    <a class="dropdown-item" href="{% url 'dashboard:assigned_orders' %}">Assigned</a>
                     <a class="dropdown-item" href="#">On Delivery</a>
+                    <a class="dropdown-item" href="{% url 'dashboard:approved_orders' %}">Approved</a>
                     <a class="dropdown-item" href="{% url 'dashboard:cancelled_orders' %}">Cancelled</a>
                     <a class="dropdown-item" href="{% url 'dashboard:completed_orders' %}">Completed</a>
                 </div>
@@ -98,7 +99,7 @@
                                                     Order</a>
                                                   {% elif order.status == "Approved" %}
                                                 <a class="dropdown-item"
-                                                    href="{% url 'dashboard:orders' %}?assign_order_id={{order.id}}"><i
+                                                    href="{% url 'dashboard:assign_courier' %}?assign_courier_id={{courier.id}}"><i
                                                         class="las la-check-square scale5 text-primary mr-2"></i> Assign
                                                     Courier</a>
                                                 <a class="dropdown-item" href="{% url 'dashboard:orders' %}?reject_order_id={{order.id}}"><i

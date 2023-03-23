@@ -1,7 +1,7 @@
 {% extends "base/base.html" %}
 {% block page_title %}Orders{% endblock %}
 {% block content %}
-{% if request.user.is_authenticated and request.user.is_courier %}
+{% if request.user.is_authenticated and request.user.is_admin %}
 
 <div class="content-body">
     <!-- row -->
@@ -93,10 +93,7 @@
                                             <a class="dropdown-item" href="{% url 'dashboard:order_detail' %}?order_id={{order.id}}"><i
                                                     class="las la-eye scale5 text-secondary mr-2"></i> View
                                                 Order</a>
-                                            <a class="dropdown-item"
-                                                href="{% url 'dashboard:completed_orders' %}?accept_order_id={{order.id}}"><i
-                                                    class="las la-check-square scale5 text-primary mr-2"></i> Accept
-                                                Order</a>
+
                                             <a class="dropdown-item"
                                                 href="{% url 'dashboard:completed_orders' %}?reject_order_id={{order.id}}"><i
                                                     class="las la-times-circle scale5 text-danger mr-2"></i> Reject
