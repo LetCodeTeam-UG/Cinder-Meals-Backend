@@ -17,6 +17,7 @@ class OrderStatus(Enum):
     CANCELLED = 'Cancelled'
     ON_THE_WAY = 'On the Way'
     COMPLETED = 'Completed'
+    ASSIGNED = 'Assigned'
 
 class PaymentMethod(Enum):
     CASH = 'Cash'

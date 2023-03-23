@@ -299,17 +299,6 @@ class ApprovedOrderListView(View):
     @method_decorator(AdminAndCourierOnly)
     def get(self, request):
         approved_order_id = request.GET.get('approved_order_id')
-        # if approved_order_id:
-        #     order = Order.objects.filter(id=approved_order_id).first()
-        #     if order:
-        #         order.status = OrderStatus.APPROVED.value
-        #         order.save()
-        #         messages.success(request,f'Order {order.order_id} approved successfully')
-        #         return redirect('dashboard:cancelled_orders')
-        #     else:
-        #         messages.error(request, "Order does not exist")
-        #         return redirect('dashboard:cancelled_orders')
-        
 
         
         approved_orders = Order.objects.filter(status=OrderStatus.APPROVED.value).order_by('-created_at')
@@ -317,6 +306,32 @@ class ApprovedOrderListView(View):
             'approved_orders' : approved_orders,
         }
         return render(request, 'pages/approved_orders.html', context)
+
+
+# @method_decorator( name='dispatch')
+class CourierAssignmentView(View):
+    def get(self, request):
+        order_id = request.GET.get('order_id')
+        courier_id = request.GET.get('courier_id')
+        
+        if order_id and courier_id:
+            order = Order.objects.filter(id=order_id).first()
+            if order:
+                order.courier_id = courier_id
+                order.status = OrderStatus.ASSIGNED.value
+                order.save()
+                messages.success(request, f'Order {order.order_id} assigned to courier {courier_id} successfully')
+                return redirect('dashboard:orders')
+            else:
+                messages.error(request, "Order does not exist")
+                return redirect('dashboard:orders')
+
+        assigned_orders = Order.objects.filter(status=OrderStatus.ASSIGNED.value).order_by('-created_at')
+        context = {
+            'assigned': assigned_orders,
+        }
+        return render(request, 'pages/assigned_orders.html', context)
+
 
 class MealView(View):
     @method_decorator(AdminAndCourierOnly)

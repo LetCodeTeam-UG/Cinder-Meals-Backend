@@ -2,7 +2,6 @@
 {% block page_title %}Orders{% endblock %}
 {% block content %}
 
-{% if request.user.is_authenticated and request.user.is_courier } 
 
 <div class="content-body">
     <!-- row -->
@@ -99,9 +98,9 @@
                                                     Order</a>
                                                   {% elif order.status == "Approved" %}
                                                 <a class="dropdown-item"
-                                                    href="{% url 'dashboard:orders' %}?process_order_id={{order.id}}"><i
-                                                        class="las la-check-square scale5 text-primary mr-2"></i> Process
-                                                    Order</a>
+                                                    href="{% url 'dashboard:orders' %}?assign_order_id={{order.id}}"><i
+                                                        class="las la-check-square scale5 text-primary mr-2"></i> Assign
+                                                    Courier</a>
                                                 <a class="dropdown-item" href="{% url 'dashboard:orders' %}?reject_order_id={{order.id}}"><i
                                                         class="las la-times-circle scale5 text-danger mr-2"></i> Reject
                                                     Order</a>
@@ -126,7 +125,6 @@
         </div>
     </div>
 </div>
-{% endif %}
 
 
 
