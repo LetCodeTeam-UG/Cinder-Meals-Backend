@@ -360,17 +360,18 @@ class CourierAssignmentView(View):
         if order_id:
             order = Order.objects.filter(id=order_id).first()
             if order:
-                couriers = User.objects.filter(id='status=is_courier=True').first()
+                courier = User.objects.filter(status__is_courier=True).first()
                 order.status = OrderStatus.ASSIGNED.value
+                order.courier = courier
                 order.save()
-                messages.success(request, f'Order {order.order_id} assigned to courier {courier_id} successfully')
+                messages.success(request, f'Order {order.order_id} assigned to courier {courier.username} successfully')
                 return redirect('dashboard:orders')
             else:
                 messages.error(request, "Order does not exist")
                 return redirect('dashboard:orders')
 
         assigned_orders = Order.objects.filter(status=OrderStatus.ASSIGNED.value).order_by('-created_at')
-        couriers = User.objects.filter(status='is_courier=True')
+        couriers = User.objects.filter(status__is_courier=True)
         context = {
             'assigned': assigned_orders,
             'couriers': couriers,
@@ -469,9 +470,11 @@ class CustomersView(View):
 class CouriersView(View):
     @method_decorator(AdminAndCourierOnly)
     def get(self, request):
-        courier = User.objects.filter(is_courier=True).order_by("-id")
+
+        couriers = User.objects.filter(is_courier=True).order_by("-id")
+
         context = {
-            "courier":courier,
+            "couriers":couriers,
         }
         return render(request, 'pages/couriers.html',context)  
 
