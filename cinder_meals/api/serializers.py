@@ -2,6 +2,7 @@ from rest_framework import serializers
 from accounts.models import User
 from dashboard.models import Order, Delivery, Payment,Meal, OrderItem, Banner, Restaurant
 from django.contrib.auth import authenticate
+from django.conf import settings
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -40,9 +41,14 @@ class BannerSerializer(serializers.ModelSerializer):
         fields = ('id', 'title', 'image')
 
 class MealSerializer(serializers.ModelSerializer):
+    image_url = serializers.SerializerMethodField()
+
+    def get_image_url(self, obj):
+        return f"{settings.MEDIA_URL}{obj.image}"
+    
     class Meta:
         model = Meal
-        fields = ('id', 'title', 'type', 'description', 'price', 'image','created_at','updated_at')
+        fields = ('id', 'title', 'type', 'description', 'price', 'image_url','created_at','updated_at')
 
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:

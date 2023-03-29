@@ -117,7 +117,7 @@ class MealListAPI(generics.GenericAPIView):
                 error_message = e.detail[field][0]
                 response_data = {
                     "error_message" : error_message,
-                    "meals" : None,
+                    "meals" : meals,
                 }
                 return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
         
