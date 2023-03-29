@@ -40,16 +40,22 @@ class BannerSerializer(serializers.ModelSerializer):
         model = Banner
         fields = ('id', 'title', 'image')
 
+
+
+
 class MealSerializer(serializers.ModelSerializer):
     image_url = serializers.SerializerMethodField()
 
-    def get_image_url(self, obj):
-        return f"{settings.MEDIA_URL}{obj.image}"
-    
     class Meta:
         model = Meal
-        fields = ('id', 'title', 'type', 'description', 'price', 'image_url','created_at','updated_at')
+        fields = ['id', 'title', 'description', 'price', 'image', 'image_url', 'created_at','updated_at']
 
+    def get_image_url(self, obj):
+        request = self.context.get('request')
+        if obj.image:
+            return request.build_absolute_uri(obj.image.url)
+        return None
+    
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order

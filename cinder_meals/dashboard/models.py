@@ -45,7 +45,7 @@ class Banner(models.Model):
 class Meal(models.Model):
     title = models.CharField(max_length=50)
     type = models.CharField(max_length=10, default=MealType.ANY.value)
-    description = models.CharField(max_length=200)
+    description = models.CharField(max_length=600)
     price = models.DecimalField(max_digits=5, decimal_places=2)
     image = models.ImageField(upload_to='meals/images/')
     orders_count = models.IntegerField(default = 0)

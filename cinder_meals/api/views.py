@@ -1,3 +1,6 @@
+import base64
+import os
+from django.conf import settings
 from rest_framework import generics,permissions, status
 from django.contrib.auth import logout
 from rest_framework.permissions import IsAuthenticated
@@ -110,46 +113,24 @@ class MealListAPI(generics.GenericAPIView):
         
         try:
             # Serialize the meals data into JSON format
-            meals = MealSerializer(meals, many=True).data
+            meals_data = MealSerializer(meals, many=True, context={'request': request}).data
+            # Update each meal's image field to include the URL of the image file
+            # for meal in meals_data:
+            #     meal['image'] = request.build_absolute_uri(meal['image'])
         except Exception as e:
             # If there's an error in serialization, return an error response
             for field in list(e.detail):
                 error_message = e.detail[field][0]
                 response_data = {
                     "error_message" : error_message,
-                    "meals" : meals,
+                    "meals" : None,
                 }
                 return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
         
         # Return the serialized meals data in a success response
         response_data = {
             "error_message" : None,
-            "meals" : meals,
-        }
-        return Response(response_data, status=status.HTTP_200_OK)
-
-
-
-class GetMealByIdAPI(generics.GenericAPIView):
-    permission_classes = [permissions.AllowAny] # Allow any user to access this API
-
-    def get(self, request, id):
-        meal = Meal.objects.filter(published=True, pk=id).first() # Get meal object by id
-        try:
-            meal = MealSerializer(meal).data # Serialize meal object to JSON data
-        except Exception as e:
-            # Handle serialization errors
-            for field in list(e.detail):
-                error_message = e.detail[field][0]
-                response_data = {
-                    "error_message": error_message,
-                    "meal": None,
-                }
-                return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
-        # If serialization was successful, return meal data
-        response_data = {
-            "error_message": None,
-            "meal": meal,
+            "meals" : meals_data,
         }
         return Response(response_data, status=status.HTTP_200_OK)
 
