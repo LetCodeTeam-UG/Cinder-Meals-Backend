@@ -7,12 +7,12 @@ from django.conf import settings
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'fullname', 'username', 'gender', 'phone')
+        fields = ('id', 'fullname', 'username', 'email', 'gender', 'phone')
 
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('username', 'fullname','gender', 'phone', 'email', 'password')
+        fields = ( 'fullname', 'email', 'password')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
@@ -48,7 +48,7 @@ class MealSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Meal
-        fields = ['id', 'title', 'description', 'price', 'image', 'image_url', 'created_at','updated_at']
+        fields = ['id', 'name', 'description', 'image', 'image_url', 'created_at', 'updated_at', 'published']
 
     def get_image_url(self, obj):
         request = self.context.get('request')
