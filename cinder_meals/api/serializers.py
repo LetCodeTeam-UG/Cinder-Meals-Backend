@@ -48,7 +48,7 @@ class MealSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Meal
-        fields = ['id', 'description', 'image', 'image_url', 'created_at', 'updated_at', 'published']
+        fields = ['id', 'title', 'price', 'description', 'image', 'image_url', 'created_at', 'updated_at', 'published']
 
     def get_image_url(self, obj):
         request = self.context.get('request')
