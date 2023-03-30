@@ -5,11 +5,13 @@ from knox.auth import TokenAuthentication
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
-from rest_framework.exceptions import ValidationError
+from rest_framework.exceptions import ValidationError, ErrorDetail
 from knox.models import AuthToken
 from knox.views import LoginView as KnoxLoginView
 from knox.views import LogoutView as KnoxLogoutView
 from django.views.decorators.csrf import csrf_exempt
+from django.core.exceptions import ImproperlyConfigured
+
 
 from accounts.models import User
 from dashboard.models import Order, Delivery, Payment,Meal, OrderItem, DeliveryLocation
@@ -101,6 +103,7 @@ class LogoutAPI(KnoxLogoutView):
         return Response({"success": "Successfully logged out."}, status=status.HTTP_200_OK)
 
 
+
 class MealListAPI(generics.GenericAPIView):
     permission_classes = [permissions.AllowAny]
     
@@ -110,23 +113,31 @@ class MealListAPI(generics.GenericAPIView):
         
         try:
             # Serialize the meals data into JSON format
-            meals = MealSerializer(meals, many=True).data
+            meals_data = MealSerializer(meals, many=True, context={'request': request}).data
         except Exception as e:
-            # If there's an error in serialization, return an error response
-             for field in list(e.detail):
-                error_message = e.detail[field][0]
-                response_data = {
-                    "error_message" : error_message,
-                    "meals" : None,
-                }
-                return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
+    # If there's an error in serialization, return an error response
+            error_message = str(e)
+            if hasattr(e, 'detail'):
+                error_message = ''
+                for field in list(e.detail):
+                    error_message += e.detail[field][0] + ' '
+                    print(error_message)
+    
+            response_data = {
+             "error_message" : error_message,
+            "meals" : None,
+                                }
+            return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
+
         
         # Return the serialized meals data in a success response
         response_data = {
-            "error_message" : None,
-            "meals" : meals,
+        "error_message" : None,
+        "meals" : meals_data,
+
         }
         return Response(response_data, status=status.HTTP_200_OK)
+
 
 
 
